@@ -1,0 +1,9 @@
+text:
+  - "Thank you for your order with %website_domain%!"
+  - "%descriptor% will be displayed on your card statement."
+
+theme:
+  images:
+    # Key : Placeholder
+    "illustration": "https://i.ibb.co/CWCmwfx/illustration.png"
+    "animation": "https://i.ibb.co/pwhYgKz/animation.gif"

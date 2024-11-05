@@ -1,0 +1,8 @@
+text:
+    - 'Report Abuse'
+    - 'Case %abuse_case_id% submitted. If we require further information, our compliance department will contact you within 72 hours.'
+    - 'An error occurred, please contact support: %support_email%'
+    - Success
+    - Error
+theme:
+    images: { bg_img: '#' }

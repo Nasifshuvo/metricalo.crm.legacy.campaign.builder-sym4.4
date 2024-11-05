@@ -1,0 +1,339 @@
+<form class="needs-validation form-horizontal master-form" id="customer_form"
+      role="form" method="POST"
+      action="{{ path('app.front.campaign.new', {'_locale': app.request.getLocale(), 'slug': campaign.slug }) }}"
+      novalidate>
+    {{ form_start(customerForm) }}
+
+    <div class="custom-form__row">
+        <div class="custom-form__item">
+
+            <div class="custom-form__item__wrap">
+                {{ form_widget(customerForm.first_name, { 'attr':
+                    {
+                        'class': 'custom-form__item__input',
+                        'placeholder': " ",
+                        'autocorrect': 'off',
+                        'required': 'required',
+                        'pattern': '.{2,}',
+                        'autofocus': 'true'
+                    }
+                }) }}
+                <label for="first_name"
+                       class="custom-form__item__label">
+                    {{ 'first_name'|trans({}, 'form_customer') }}
+                </label>
+            </div>
+
+            <div class="custom-form__error">
+                <div class="invalid-feedback">
+                    {{ 'First name must be at least {{ limit }} characters long.'|trans({'{{ limit }}': 2}, 'validators') }}
+                </div>
+                <div class="customer-form-error">
+                    {{ form_errors(customerForm.first_name) }}
+                </div>
+            </div>
+        </div>
+        <div class="custom-form__item">
+            <div class="custom-form__item__wrap">
+                {{ form_widget(customerForm.last_name, { 'attr':
+                    {
+                        'class': 'custom-form__item__input',
+                        'placeholder': " ",
+                        'autocorrect': 'off',
+                        'required': 'required',
+                        'pattern': '.{2,}'
+                    }
+                }) }}
+                <label for="last_name"
+                       class="custom-form__item__label">{{ 'last_name'|trans({}, 'form_customer') }}</label>
+            </div>
+
+            <div class="custom-form__error">
+                <div class="invalid-feedback">
+                    {{ 'Last name must be at least {{ limit }} characters long.'|trans({'{{ limit }}': 2}, 'validators') }}
+                </div>
+                <div class="customer-form-error">
+                    {{ form_errors(customerForm.last_name) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="custom-form__row">
+        <div class="custom-form__item full-width">
+            <div class="custom-form__item__wrap">
+                {{ form_widget(customerForm.address, { 'attr':
+                    {
+                        'class': 'custom-form__item__input',
+                        'placeholder': " ",
+                        'autocorrect': 'off',
+                        'required': 'required'
+                    }
+                }) }}
+                <label for="address" class="custom-form__item__label">{{ 'address'|trans({}, 'form_customer') }}</label>
+            </div>
+
+            <div class="custom-form__error">
+                <div class="invalid-feedback">
+                    {{ 'Address must at least {{ limit }} characters long.'|trans({'{{ limit }}': 5}, 'validators') }}
+                </div>
+                <div class="customer-form-error">
+                    {{ form_errors(customerForm.address) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="custom-form__row">
+        <div class="custom-form__item full-width">
+            <div class="custom-form__item__wrap">
+                {{ form_widget(customerForm.phone, { 'attr':
+                    {
+                        'class': 'custom-form__item__input',
+                        'placeholder': " ",
+                        'autocorrect': 'off',
+                        'required': 'required',
+                        'type': 'tel'
+                    }
+                }) }}
+            </div>
+
+            <div class="custom-form__error">
+                <div class="invalid-feedback display-block hide" id="error-msg">
+                    {# error message #}
+                </div>
+                <div class="customer-form-error">
+                    {{ form_errors(customerForm.address) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="custom-form__row">
+        <div class="custom-form__item">
+            <div class="custom-form__item__wrap">
+                {{ form_widget(customerForm.postcode, { 'attr':
+                    {
+                        'class': 'custom-form__item__input',
+                        'placeholder': " ",
+                        'autocorrect': 'off',
+                        'minlength': '1',
+                        'maxlength': '30',
+                        'required': 'required'
+                    }
+                }) }}
+                <label for="postcode"
+                       class="custom-form__item__label">{{ 'zipcode'|trans({}, 'form_customer') }}</label>
+            </div>
+
+            <div class="custom-form__error">
+                <div class="invalid-feedback">
+                    {{ 'Postcode must be at least {{ limit }} characters long.'|trans({'{{ limit }}': 3}, 'validators') }}
+                </div>
+                <div class="customer-form-error">
+                    {{ form_errors(customerForm.postcode) }}
+                </div>
+            </div>
+        </div>
+        <div class="custom-form__item">
+            <div class="custom-form__item__wrap">
+                {{ form_widget(customerForm.city, { 'attr':
+                    {
+                        'class': 'custom-form__item__input',
+                        'placeholder': " ",
+                        'autocorrect': 'off',
+                        'minlength': '1',
+                        'maxlength': '80',
+                        'required': 'required'
+                    }
+                }) }}
+                <label for="city" class="custom-form__item__label">{{ 'city'|trans({}, 'form_customer') }}</label>
+            </div>
+
+            <div class="custom-form__error">
+                <div class="invalid-feedback">
+                    {{ 'City must be at least {{ limit }} characters long.'|trans({'{{ limit }}': 2}, 'validators') }}
+                </div>
+                <div class="customer-form-error">
+                    {{ form_errors(customerForm.city) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if lead.getCountryCode() in ['AF', 'US', 'AU', 'AT', 'BR', 'DE', 'IN', 'NG', 'NZ', 'MM', 'FM', 'PW'] %}
+        <div class="custom-form__row">
+            <div class="custom-form__item full-width">
+                <div class="custom-form__item__wrap">
+                    {{ form_widget(customerForm.state, { 'attr':
+                        {
+                            'class': 'custom-form__item__input',
+                            'placeholder': " ",
+                            'autocorrect': 'off',
+                        }
+                    }) }}
+                    <label for="state" class="custom-form__item__label">{{ 'state'|trans({}, 'form_customer') }}</label>
+                </div>
+
+                <div class="custom-form__error">
+                    <div class="invalid-feedback">
+                        {{ 'Please select a valid state.'|trans({}, 'validators') }}
+                    </div>
+                    <div class="customer-form-error">
+                        {{ form_errors(customerForm.state) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="custom-form__row">
+        <div class="custom-form__item full-width">
+            <div class="custom-form__item__wrap">
+                {% set email_field_attributes = {
+                    'class': 'custom-form__item__input',
+                    'placeholder': " ",
+                    'autocorrect': 'off',
+                    'required': 'required',
+                    'pattern': '.{6,}'
+                } %}
+                {% if app.request.query.get("lock_email") == 1 %}
+                    {% set email_field_attributes = email_field_attributes|merge({ 'readonly': 'readonly' }) %}
+                {% endif %}
+                {{ form_widget(customerForm.email, { 'attr': email_field_attributes }) }}
+                <label for="email" class="custom-form__item__label">{{ 'email'|trans({}, 'form_customer') }}</label>
+            </div>
+
+            <div class="custom-form__error">
+                <div class="invalid-feedback">
+                    {{ 'Please enter a valid email address.'|trans({}, 'validators') }}
+                </div>
+                <div class="customer-form-error">
+                    {{ form_errors(customerForm.email) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="custom-form__row">
+        <div class="custom-form__item full-width">
+
+        </div>
+    </div>
+
+    {% include termsCheckboxSection %}
+
+    <button type="submit" name="submit" id="customer_submit_btn" class="custom-form__button">
+        {{ 'continue'|trans({}, 'form_customer') }}
+    </button>
+
+    {{ form_widget(customerForm._token) }}
+
+    {{ form_end(customerForm, {'render_rest': false}) }}
+</form>
+
+<script type="text/javascript">
+    function checkInputFilled(inputs) {
+        inputs.forEach(input => {
+            const inputValue = input.value;
+            if (inputValue === "") {
+                input.classList.remove('filled');
+                input.closest('.custom-form__item').classList.remove('focused');
+            } else {
+                input.classList.add('filled');
+                input.closest('.custom-form__item').classList.add('focused');
+            }
+        });
+    }
+
+    const errorMap = [
+        "{{ 'Phone number is not valid'|trans({}, 'validators') }}",
+        "{{ 'Invalid Country Code'|trans({}, 'validators') }}",
+        "{{ 'Too short'|trans({}, 'validators') }}",
+        "{{ 'Too long'|trans({}, 'validators') }}",
+        "{{ 'Not a number'|trans({}, 'validators') }}",
+        "{{ 'Phone number is not valid'|trans({}, 'validators') }}",
+        "Area code too short",
+        "Area code too long",
+        "Too short after IDD",
+        "Too long after IDD",
+        "Not a valid IDD",
+        "Not a valid NDC (National Destination Code)",
+        "Not a valid NDC or NDC+SN",
+        "Not a valid NDC or SN",
+        "Not a valid SN"
+    ];
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const input = document.querySelector('#customer_phone');
+        const errorMsg = document.querySelector("#error-msg");
+
+        const iti = window.intlTelInput(input, {
+            autoPlaceholder: "polite",
+            utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/19.5.2/js/utils.min.js',
+            initialCountry: '{{ lead.getCountryCode() }}',
+            separateDialCode: true,
+            showSelectedDialCode: true, // TODO: if we want to show the +44 in the flag then true, if not false.
+            nationalMode: true, // TODO: converting the number with +44 in front when we enter the number, so the field value contains the prefix
+        });
+
+        const reset = () => {
+            input.classList.remove("error");
+            errorMsg.innerHTML = "";
+            errorMsg.classList.add("hide");
+        };
+
+        const showError = (msg) => {
+            input.classList.add("error");
+            errorMsg.innerHTML = `{{ 'Phone number is not valid'|trans({}, 'validators') }} - ${msg}.`;
+            errorMsg.classList.remove("hide");
+            errorMsg.style.display = "block";
+        };
+
+        input.addEventListener('blur', () => {
+            reset();
+            if (!input.value.trim()) {
+                showError("{{ 'Phone number is required.'|trans({}, 'validators') }}");
+            } else if (input.value.length < 3) {
+                showError(`{{ 'Phone number is too short.'|trans({}, 'validators') }}`);
+            } else if (input.value.length > 20) {
+                showError(`{{ 'Phone number is too long'|trans({}, 'validators') }}`);
+            }
+        });
+
+        input.addEventListener('change', reset);
+        input.addEventListener('keyup', reset);
+    });
+
+    (function () {
+        'use strict'
+
+        const forms = document.querySelectorAll('.needs-validation');
+        const invalidInputs = Array.from(document.querySelectorAll('input:invalid'));
+        const customFormInputs = document.querySelectorAll('.custom-form__item__input');
+
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+
+                        invalidInputs.forEach(input => {
+                            input.classList.add('invalid-input');
+                        })
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+
+        customFormInputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.closest('.custom-form__item').classList.add('focused');
+            });
+
+            input.addEventListener('blur', () => {
+                checkInputFilled([input]);
+            });
+        });
+
+        // Call the checkInputFilled function when the page loads or when the data is populated
+        checkInputFilled(customFormInputs);
+
+    })()
+</script>

@@ -1,0 +1,43 @@
+<div class="checkbox form-checkbox">
+    <label class="custom-form__row checkbox">
+        <input type="checkbox" class="big-checkbox" required="required" name="customer[terms]" id="terms"
+               value="true"
+               data-validator-message="{{ 'you_must_accept_the_terms_and_conditions'|trans({}, 'form_customer') }}">
+        <span>
+                        {% if campaign.isContest() %}
+
+                            {{ 'i.am.18.years.old.and.accept.the.terms.and.conditions.and.the.promotional.terms'|trans({
+                                '{{ start_a_terms }}': '<a class="termslink" data-bs-toggle="modal" data-bs-target="#general_terms_modal">',
+                                '{{ end_a }}': '</a>',
+                                '{{ start_a_promotion }}': '<a class="termslink" data-bs-toggle="modal" data-bs-target="#promotional_terms_modal">',
+                            }, 'form_customer')|raw }}
+
+                        {% else %}
+
+                            {{ 'i.am.18.years.old.and.accept.the.terms.and.conditions'|trans({
+                                '{{ start_a_terms }}': '<a class="termslink" data-bs-toggle="modal" data-bs-target="#general_terms_modal">',
+                                '{{ end_a }}': '</a>'
+                            }, 'form_customer')|raw }}
+
+                            {% if campaign.isV2Terms() %}
+                                {{ 'and.the.subscription.terms.and.conditions'|trans({
+                                    '{{ start_a_terms }}': '<a class="termslink" data-bs-toggle="modal" data-bs-target="#general_terms_extract">',
+                                    '{{ end_a }}': '</a>'
+                                }, 'form_customer')|raw }}
+                            {% endif %}
+                        {% endif %}
+
+            {% if campaign.getVertical() is empty %}
+                <br>
+                {% if product.hasTrial() %}
+                    {{ 'is_only_valid_for_new_members_of'|trans({'%subscription_name%': product.getSubscriptionName(), '%trial_days%': product.getSubscriptionTrialDays(), '%trial_price%': product.getPrice()|priceIntl(product.getCurrency(), lead.getIntlLocale()), '%subscription_price%': product.getSubscriptionPrice()|priceIntl(product.getCurrency(), lead.getIntlLocale()), '%subscription_interval_days%': product.getSubscriptionIntervalDays()}, 'form_customer')|raw }}
+                {% else %}
+                    {{ 'is.only.valid.for.new.members.of.no.trial'|trans({'%subscription_name%': product.getSubscriptionName(), '%trial_days%': product.getSubscriptionTrialDays(), '%trial_price%': product.getPrice()|priceIntl(product.getCurrency(), lead.getIntlLocale()), '%subscription_price%': product.getSubscriptionPrice()|priceIntl(product.getCurrency(), lead.getIntlLocale()), '%subscription_interval_days%': product.getSubscriptionIntervalDays()}, 'form_customer')|raw }}
+                {% endif %}
+            {% endif %}
+                    </span>
+    </label>
+</div>
+{% if campaign.getVertical() is empty %}
+    {% include 'page_template/_shared/_customer_form/_terms/_accept_newsletter.html.twig' %}
+{% endif %}

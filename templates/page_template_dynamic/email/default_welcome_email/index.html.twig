@@ -1,0 +1,108 @@
+{% trans_default_domain "email" %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        {{ pageText.get('Welcome to %website_name%!') }}
+    </title>
+    <style>
+        body {
+            background-color: #515659;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <table
+        style="background-color: #9EDDFF; margin: 0 auto; padding: 50px 0 60px; position: relative; width: 800px; height: auto; overflow: hidden;"
+        size="A4">
+        <tr>
+            <td>
+                <div style="text-align: center; margin: 0 40px 20px;">
+                    <img src="{{ pageText.get('%website_logo_path%') }}" alt="time" style="width: 75px; border-radius: 8px;">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h2
+                    style="color: #fff; font-size: 36px; padding: 50px; text-align: center; background-color: #6499E9; margin: 0 40px;">
+                    {{ pageText.get('Welcome to %website_name%!') }}</h2>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table
+                    style="background-color: #fff; padding: 70px 24px; text-align: center; margin: 0 40px; color: #000;">
+                    <tr>
+                        <td>
+                            <p style="margin-bottom: 24px; font-size: 16px;">{{ pageText.get('Dear %customer_full_name%') }}</p>
+
+                            <p style=" margin-bottom: 24px; font-size: 16px;">{{ pageText.get("We're thrilled to have you as part of the demo.com family!") }}</p>
+
+                            <p style=" margin-bottom: 24px; font-size: 16px;">{{ pageText.get("Your account is all set up, and you're ready to explore our platform. Log in and begin your %website_name% experience today!") }}</p>
+
+
+                            <!-- table 1 -->
+
+                            <table style="width: 100%; border: none; color: #000;">
+                                <tr>
+                                    <td style="width: 45%;">
+                                        <p style="font-weight: 600; line-height: 2; text-align: right;">{{ pageText.get('Username:') }}</p>
+                                    </td>
+                                    <td style="width: 55%;">
+                                        <p style=" line-height: 2; text-align: left; margin-left: 10px;">
+                                            {{ pageText.get('%user_username%') }}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 45%;">
+                                        <p style="font-weight: 600; line-height: 2; text-align: right;">{{ pageText.get('Password:') }}</p>
+                                    </td>
+                                    <td style="width: 55%;">
+                                        <p style=" line-height: 2; text-align: left; margin-left: 10px;">{{ pageText.get('%user_password%') }}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 45%;">
+                                        <p style="font-weight: 600; line-height: 2; text-align: right;">{{ pageText.get('Login at:') }}</p>
+                                    </td>
+                                    <td style="width: 55%;">
+                                        <p style=" line-height: 2; text-align: left; margin-left: 10px;">{{ pageText.get('%website_domain%') }}</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                            <p style="color: #000; margin-top: 45px; font-size: 16px;">{{ pageText.get("If you encounter any issues, don not hesitate to contact our support team via email at %website_support_email% or by phone at %website_support_number%.") }}</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+                <p
+                    style="color: #000; font-weight: 600; margin-bottom: 24px; font-size: 16px; margin-top: 60px; text-align: center;">
+                    {{ pageText.get('%company_name%') }}</p>
+                <p style="color: #000; font-size: 16px; text-align: center;">{{ pageText.get('%company_business_number% - %company_address%, %company_postcode%, %company_city%, %company_country%') }}</p>
+
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>

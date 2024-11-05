@@ -1,0 +1,9 @@
+<div class="checkbox form-checkbox find-input-class">
+    <label class="custom-form__row checkbox">
+        {{ form_widget(customerForm.accepting_newsletter, { 'attr':
+            {
+                'class': 'big-checkbox',
+            } }) }}
+        <span> {{ pageText.get('Tick this box to receive offers, promotions and other commercial messages - You can unsubscribe at any time.') }}</span>
+    </label>
+</div>

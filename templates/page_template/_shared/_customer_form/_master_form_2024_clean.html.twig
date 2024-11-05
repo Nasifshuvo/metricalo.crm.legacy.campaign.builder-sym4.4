@@ -1,0 +1,552 @@
+<style type="text/css">
+
+    .customer-form-error {
+        display: block;
+        width: 100%;
+        margin-top: .25rem;
+        font-size: .875em;
+        color: #dc3545;
+    }
+
+    .moving-label {
+        position: absolute;
+        /*font-size: 1rem;*/
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: white;
+        color: gray;
+        padding: 0 0.5rem;
+        margin: 0 1rem;
+        transition: .1s ease-out;
+        transform-origin: left top;
+        pointer-events: none;
+    }
+
+    .material-input {
+        font-size: 1rem;
+        outline: none;
+        border: 1px solid gray;
+        border-radius: 5px;
+        padding: 1rem 0.7rem;
+        color: gray;
+        transition: 0.1s ease-out;
+    }
+
+    .material-input:focus {
+        border: 1px solid #6200EE;
+    }
+
+    .material-input:focus + label {
+        color: #6200EE;
+        top: 0;
+        transform: translateY(-50%) scale(.9);
+    }
+
+    .material-input:not(:placeholder-shown) + label {
+        top: 0;
+        transform: translateY(-50%) scale(.9);
+    }
+
+    .invalid-input + label {
+        top: 25%;
+    }
+
+
+    .iti.iti--allow-dropdown {
+        width: 100%;
+    }
+    #phone-input-error {
+        display: block;
+    }
+
+    .show {
+        display: block !important;
+    }
+
+    .hide {
+        display: none !important;
+    }
+
+    .border-red {
+        border-color: red !important;
+    }
+
+    .text-terms-red {
+        color: red !important;
+    }
+
+</style>
+
+<form role="form" method="POST"
+                                       action="{{ path('app.front.campaign.new', {'_locale': app.request.getLocale(), 'slug': campaign.slug }) }}"
+                                       id="customer_form" class="form-horizontal" novalidate>
+    {{ form_start(customerForm) }}
+
+    <div class="row">
+        <div class="col-12 col-md-6 position-relative mt-3 find-input-class">
+            <div class="position-relative">
+                {{ form_widget(customerForm.first_name, { 'attr':
+                    {
+                        'class': 'form-control required input material-input',
+                        'placeholder': " ",
+                        'autocorrect': 'off',
+                        'required': 'required',
+                        'pattern': '.{2,}',
+                        'autofocus': 'true'
+                    }
+                }) }}
+                <label for="first_name" class="moving-label">{{ 'first_name'|trans({}, 'form_customer') }}</label>
+            </div>
+            <div class="invalid-feedback hide"></div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.first_name) }}
+            </div>
+        </div>
+        <div class="col-12 col-md-6 position-relative mt-3 find-input-class">
+            <div class="position-relative">
+                {{ form_widget(customerForm.last_name, { 'attr':
+                    {
+                        'class': 'form-control required input material-input',
+                        'placeholder': " ",
+                        'autocorrect': 'off',
+                        'required': 'required',
+                        'pattern': '.{2,}'
+                    }
+                }) }}
+                <label for="last_name" class="moving-label">{{ 'last_name'|trans({}, 'form_customer') }}</label>
+            </div>
+            <div class="invalid-feedback hide"></div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.last_name) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 position-relative mt-3 find-input-class">
+            <div class="position-relative">
+                {{ form_widget(customerForm.address, { 'attr':
+                    {
+                        'class': 'form-control required input material-input',
+                        'placeholder': " ",
+                        'autocorrect': 'off',
+                        'required': 'required'
+                    }
+                }) }}
+                <label for="address" class="moving-label">{{ 'address'|trans({}, 'form_customer') }}</label>
+            </div>
+            <div class="invalid-feedback hide"></div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.address) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6 position-relative mt-3 find-input-class">
+            <div class="position-relative">
+                {{ form_widget(customerForm.postcode, { 'attr':
+                    {
+                        'class': 'form-control required input material-input',
+                        'placeholder': " ",
+                        'autocorrect': 'off',
+                        'minlength': '1',
+                        'maxlength': '30',
+                        'required': 'required'
+                    }
+                }) }}
+                <label for="postcode" class="moving-label">{{ 'zipcode'|trans({}, 'form_customer') }}</label>
+            </div>
+            <div class="invalid-feedback hide"></div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.postcode) }}
+            </div>
+        </div>
+        <div class="col-12 col-md-6 position-relative mt-3 find-input-class">
+            <div class="position-relative">
+                {{ form_widget(customerForm.city, { 'attr':
+                    {
+                        'class': 'form-control required input material-input',
+                        'placeholder': " ",
+                        'autocorrect': 'off',
+                        'minlength': '1',
+                        'maxlength': '80',
+                        'required': 'required'
+                    }
+                }) }}
+                <label for="city" class="moving-label">{{ 'city'|trans({}, 'form_customer') }}</label>
+            </div>
+            <div class="invalid-feedback hide"></div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.city) }}
+            </div>
+        </div>
+    </div>
+    {% if (lead.getCountryCode() == 'CA' or lead.getCountryCode() == 'MY') %}
+        <div class="row">
+            <div class="col-12 position-relative mt-3 find-input-class">
+                <div class="position-relative">
+                    {{ form_widget(customerForm.state, { 'attr':
+                        {
+                            'class': 'form-control input material-input',
+                            'placeholder': " ",
+                            'autocorrect': 'off'
+                        }
+                    }) }}
+                    <label for="state" class="moving-label">{{ 'state'|trans({}, 'form_customer') }}</label>
+                </div>
+                <div class="invalid-feedback hide"></div>
+                <div class="customer-form-error">
+                    {{ form_errors(customerForm.state) }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-12 position-relative mt-3 find-input-class">
+            <div class="position-relative">
+                {% set email_field_attributes = {
+                    'class': 'form-control required input material-input',
+                    'placeholder': " ",
+                    'autocorrect': 'off',
+                    'required': 'required',
+                    'pattern': '.{6,}'
+                } %}
+                {% if app.request.query.get("lock_email") == 1 %}
+                    {% set email_field_attributes = email_field_attributes|merge({ 'readonly': 'readonly' }) %}
+                {% endif %}
+                {{ form_widget(customerForm.email, { 'attr': email_field_attributes }) }}
+                <label for="email" class="moving-label">{{ 'email'|trans({}, 'form_customer') }}</label>
+            </div>
+            <div class="invalid-feedback hide"></div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.email) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 position-relative mt-3 find-input-class">
+            {{ form_widget(customerForm.phone, { 'attr':
+                {
+                    'class': 'form-control required input material-input',
+                    'placeholder': " ",
+                    'required': 'required',
+                    'autocorrect': 'off'
+                }
+            }) }}
+            {# <label for="phone" class="moving-label">{{ 'phone'|trans({}, 'form_customer') }}</label>#}
+            <div class="invalid-feedback hide" id="phone-input-error">
+            </div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.phone) }}
+            </div>
+        </div>
+    </div>
+
+    {% include termsCheckboxSection %}
+
+    <div class="form-group" style="margin-top: 15px;">
+        <button type="submit" name="submit" id="customer_submit_btn"
+                class="btn btn-success btn-lg btn-block">{{ 'continue'|trans({}, 'form_customer') }} <span
+                class="glyphicon glyphicon-chevron-right"></span></button>
+    </div>
+
+    {{ form_widget(customerForm._token) }}
+
+    {{ form_end(customerForm, {'render_rest': false}) }}
+</form>
+
+<script type="text/javascript">
+    const errorMap = [
+        "{{ 'Phone number is not valid'|trans({}, 'validators') }}",
+        "{{ 'Invalid Country Code'|trans({}, 'validators') }}",
+        "{{ 'Too short'|trans({}, 'validators') }}",
+        "{{ 'Too long'|trans({}, 'validators') }}",
+        "{{ 'Not a number'|trans({}, 'validators') }}",
+        "{{ 'Phone number is not valid'|trans({}, 'validators') }}",
+        "Area code too short",
+        "Area code too long",
+        "Too short after IDD",
+        "Too long after IDD",
+        "Not a valid IDD",
+        "Not a valid NDC (National Destination Code)",
+        "Not a valid NDC or NDC+SN",
+        "Not a valid NDC or SN",
+        "Not a valid SN"
+    ];
+
+    var form = document.querySelector("#customer_form");
+    let invalidInputs = Array.from(document.querySelectorAll('input:invalid'));
+
+    document.addEventListener('DOMContentLoaded', function() {
+        /**
+         * @param {HTMLFormElement} form
+         * @param {NodeListOf<HTMLInputElement>} inputs
+         * Form and input elements
+        */
+        const form = document.querySelector('#customer_form');
+        const inputs = form.querySelectorAll('input');
+        /**
+         * @param {HTMLInputElement} termsInput
+         * @param {HTMLInputElement} termsAndPolicyInput
+         * @param {HTMLSpanElement} termsSpan
+         * @param {HTMLSpanElement} termsAndPolicySpan
+         * Terms and policy input and span elements
+        */
+        const termsInput = document.querySelector('#terms');
+        const termsAndPolicyInput = document.querySelector('#terms_and_policy');
+        let termsSpan = null;
+        let termsAndPolicySpan = null;
+
+        if (termsInput) {
+            termsSpan = termsInput.parentElement.querySelector("span");
+        }
+        if (termsAndPolicyInput) {
+            termsAndPolicySpan = termsAndPolicyInput.parentElement.querySelector("span");
+        }
+        /**
+         * @param {HTMLInputElement} phoneInput
+         * @param {HTMLDivElement} phoneErrorDiv
+         * Phone input and error div elements
+        */
+        const phoneInput = document.querySelector('#customer_phone');
+        const phoneErrorDiv = document.querySelector('#phone-input-error');
+        /**
+         * @param {HTMLInputSelectElement} stateInput
+         * State input element
+        */
+        const stateInput = document.querySelector('#customer_state');
+
+        const iti = window.intlTelInput(phoneInput, {
+            autoPlaceholder: "polite",
+            utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/19.5.2/js/utils.min.js',
+            initialCountry: '{{ lead.getCountryCode() }}',
+            separateDialCode: true,
+            showSelectedDialCode: true, // TODO: if we want to show the +44 in the flag then true, if not false.
+            nationalMode: true, // TODO: converting the number with +44 in front when we enter the number, so the field value contains the prefix
+        });
+
+        const fieldMinimumLengths = {
+            customer_first_name: 2,
+            customer_last_name: 2,
+            customer_address: 5,
+            customer_postcode: 3,
+            customer_city: 2
+        };
+
+        const fieldNames = {
+            customer_first_name: "First Name",
+            customer_last_name: "Last Name",
+            customer_address: "Address",
+            customer_postcode: "Postcode",
+            customer_city: "City"
+        }
+
+        const fieldErrorMessages = {
+            customer_first_name: "{{ 'First name must be at least {{ limit }} characters long.'|trans({'{{ limit }}': 2}, 'validators') }}",
+            customer_last_name: "{{ 'Last name must be at least {{ limit }} characters long.'|trans({'{{ limit }}': 2}, 'validators') }}",
+            customer_address: "{{ 'Address must at least {{ limit }} characters long.'|trans({'{{ limit }}': 5}, 'validators') }}",
+            customer_postcode: "{{ 'Postcode must be at least {{ limit }} characters long.'|trans({'{{ limit }}': 3}, 'validators') }}",
+            customer_city: "{{ 'City must be at least {{ limit }} characters long.'|trans({'{{ limit }}': 2}, 'validators') }}",
+            customer_state: " {{ 'Please select a valid state.'|trans({}, 'validators') }}"
+        }
+
+        const fieldRequiredMessages = {
+            customer_first_name: "{{ 'First name field is required.'|trans({}, 'validators') }}",
+            customer_last_name: "{{ 'Last name field is required.'|trans({}, 'validators') }}",
+            customer_address: "{{ 'Address field is required.'|trans({}, 'validators') }}",
+            customer_postcode: "{{ 'Postcode field is required.'|trans({}, 'validators') }}",
+            customer_city: "{{ 'City field is required.'|trans({}, 'validators') }}",
+            customer_email: "{{ 'Email field is required.'|trans({}, 'validators') }}",
+        }
+
+        const validateLength = (name, value) => {
+            const minLength = fieldMinimumLengths[name];
+            const fieldName = fieldNames[name];
+            const fieldError = fieldErrorMessages[name];
+
+            if (minLength !== undefined && value.length < minLength) {
+                const errorMessage = fieldError;
+                return { isValid: false, errorMessage };
+            }
+
+            return { isValid: true, errorMessage: null };
+        };
+
+        const validateInputs = () => {
+            let isValid = true;
+
+            inputs.forEach(input => {
+                const inputId = input.id;
+                const inputValue = input.value.trim();
+                let errorMessage = '';
+
+                switch (inputId) {
+                    case 'customer_phone':
+                        errorMessage = validatePhone(input);
+                        break;
+                    case 'customer_first_name':
+                    case 'customer_last_name':
+                    case 'customer_address':
+                    case 'customer_postcode':
+                    case 'customer_city':
+                        errorMessage = validateFieldLength(inputId, inputValue);
+                        break;
+                    case 'customer_email':
+                        errorMessage = validateEmail(inputValue);
+                        break;
+                }
+                if (errorMessage) {
+                    isValid = false;
+                    showError(input, errorMessage);
+                }
+            });
+
+            if (stateInput) {
+                if (stateInput.value === '') {
+                    errorMessage = fieldErrorMessages['customer_state'];
+                    isValid = false;
+
+                    showError(stateInput, errorMessage);
+                }
+            }
+
+            return isValid;
+        };
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        const validateFieldLength = (inputId, value) => {
+            const lengthValidation = validateLength(inputId, value);
+            const requiredErrorMessage = fieldRequiredMessages[inputId];
+
+            if (!value) {
+                return requiredErrorMessage;
+            } else if (!lengthValidation.isValid) {
+                return lengthValidation.errorMessage;
+            }
+            return '';
+        };
+
+        const validateEmail = (value) => {
+            const validEmailError = "{{ 'Please enter a valid email address.'|trans({}, 'validators') }}"
+
+            if (!value) {
+                return fieldRequiredMessages['customer_email'];
+            } else if (!isValidEmail(value)) {
+                return validEmailError;
+            }
+
+            return '';
+        };
+
+        const validateTerms = (input) => {
+            const validEmailError = "{{ 'You must agree to the terms and conditions.'|trans({}, 'validators') }}"
+
+            if (!input.checked) {
+                return validEmailError;
+            }
+
+            return '';
+        };
+
+        const showError = (input, message) => {
+            if (input && typeof input.closest === 'function') {
+                const parentDiv = input.closest('.find-input-class');
+
+                if (parentDiv) {
+                    const errorDiv = parentDiv.querySelector('.invalid-feedback');
+
+                    switch (input.id) {
+                        case 'customer_phone':
+                            showPhoneError(input, message);
+                            break;
+                        default:
+                            if (errorDiv) {
+                                showRegularError(input, errorDiv, message);
+                            }
+                            break;
+                    }
+                } else {
+                    console.error('Parent container with class .find-input-class not found.');
+                }
+            } else {
+                console.error('Input is null or does not have a closest method.');
+            }
+        };
+
+        const showPhoneError = (input, message) => {
+            input.classList.add('is-invalid', 'border-red');
+            phoneErrorDiv.innerHTML = message;
+            phoneErrorDiv.classList.remove("hide");
+            phoneErrorDiv.classList.add("show");
+        };
+
+        const showTermsError = (error) => {
+            if (error === 'terms') {
+                termsSpan.classList.add("text-terms-red");
+            } else {
+                termsAndPolicySpan.classList.add("text-terms-red");
+            }
+        };
+
+        const showRegularError = (input, errorDiv, message) => {
+            input.classList.add('is-invalid', 'border-red');
+            errorDiv.innerHTML = message;
+            errorDiv.classList.remove("hide");
+            errorDiv.classList.add("show");
+        };
+
+        const handleBlur = (input, errorDiv) => {
+            input.classList.remove('is-invalid', 'border-red');
+            if (errorDiv) {
+                errorDiv.classList.remove('show');
+                errorDiv.classList.add('hide');
+            }
+        };
+
+        inputs.forEach(input => {
+            input.addEventListener('blur', () => {
+                const parentDiv = input.closest('.find-input-class');
+
+                const errorDiv = parentDiv.querySelector('.invalid-feedback');
+
+                switch (input.id) {
+                    case 'customer_phone':
+                        if (phoneErrorDiv) {
+                            phoneErrorDiv.classList.remove('show');
+                            phoneErrorDiv.classList.add('hide');
+                        }
+                        break;
+                    case 'terms':
+                        termsSpan.classList.remove('text-terms-red');
+                        break;
+                    case 'terms_and_policy':
+                        termsAndPolicySpan.classList.remove('text-terms-red');
+                        break;
+                }
+
+                handleBlur(input, errorDiv);
+            });
+        });
+
+        if (stateInput) {
+            stateInput.addEventListener('blur', () => {
+                const errorDiv = stateInput.parentElement.querySelector('.invalid-feedback');
+                handleBlur(stateInput, errorDiv);
+            });
+        }
+
+
+        form.addEventListener('submit', function(event) {
+            if (!validateInputs()) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                return;
+            }
+        });
+    });
+</script>

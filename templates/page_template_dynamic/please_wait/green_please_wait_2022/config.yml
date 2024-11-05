@@ -1,0 +1,9 @@
+text:
+  - "Please wait"
+  - "We are processing your order."
+
+theme:
+  images:
+    # Key : Placeholder
+    "illustration": "https://i.ibb.co/PMK2y6y/illustration.png"
+    "animation": "https://i.ibb.co/HPWR17g/animation.gif"

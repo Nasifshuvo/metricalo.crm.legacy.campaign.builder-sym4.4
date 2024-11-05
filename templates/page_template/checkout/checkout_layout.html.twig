@@ -1,0 +1,85 @@
+{% extends 'page_template/base_layout.html.twig' %}
+
+{% trans_default_domain "order" %}
+
+{% block title %}{{ 'secure.payment'|trans }}{% endblock %}
+
+{% block meta_tags %}
+    {% if service is defined and service is not null %}
+
+        {% if service.getFaviconUrl() is not empty %}
+            <link rel="shortcut icon" href="{{ service.getFaviconUrl() }}">
+        {% endif %}
+
+        <meta name="apple-mobile-web-app-title" content="{{ service.getName() }}/">
+        <meta name="application-name" content="{{ service.getName() }}/">
+    {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="//igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/additional-methods.min.js"></script>
+
+    {% if script_view is defined and script_view is not empty %}
+        {% include script_view %}
+    {% endif %}
+
+    {% if include_query_script is defined and include_query_script is same as(true) %}
+        {% include 'page_template/_shared/_query_order_status.html.twig' %}
+    {% endif %}
+
+    <script type="text/javascript">
+        $iframes = $('#layout-body .loading-iframe iframe');
+
+        if ($iframes.length) {
+
+            $pleaseWait = $("<div id='payment-please-wait-container'><img class='iframe-loading' src='{{ asset('images/process/loading.gif') }}'></img></div>");
+            $pleaseWait.insertAfter("#layout-body .loading-iframe iframe");
+
+            $iframes.hide();
+
+            $iframes.on('load', function () {
+                $pleaseWait.hide();
+                $iframes.show();
+            });
+        }
+    </script>
+
+    {% for flash_message in app.session.flashbag.get('error') %}
+        <script type="text/javascript">
+
+            {% if flash_message is iterable %}
+            {% for message in flash_message %}
+            swal("{{ 'the.payment.failed'|trans }}", '{{ message }}', 'error');
+            {% endfor %}
+            {% else %}
+            swal("{{ 'the.payment.failed'|trans }}", '{{ flash_message }}', 'error');
+            {% endif %}
+
+        </script>
+    {% endfor %}
+
+{% endblock %}
+
+{% block facebook_event %}
+    fbq('track', 'CompleteRegistration');
+    fbq('track', 'InitiateCheckout');
+{% endblock %}
+
+{% block tiktok_events %}
+    ttq.track('CompleteRegistration')
+{% endblock %}
+
+{% block taboola_events %}
+    window._tfa.push({
+    notify: 'event',
+    name: 'conversion',
+    id: {{ taboolaPixel.getPixelId() }}
+    });
+{% endblock %}
+
+
+{% block tracking_scripts %}
+{% endblock %}

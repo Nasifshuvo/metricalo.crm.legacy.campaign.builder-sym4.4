@@ -1,0 +1,7 @@
+{% if campaign.getVertical() %}
+    <section>
+        <div class="caf_cont">
+            <a target="_blank" href="{{ absolute_url(path('report_abuse', {'_locale': 'en'})) }}">Report abuse</a>
+        </div>
+    </section>
+{% endif %}

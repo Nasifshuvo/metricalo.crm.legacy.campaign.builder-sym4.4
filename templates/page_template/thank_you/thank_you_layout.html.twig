@@ -1,0 +1,98 @@
+{% extends 'page_template/base_layout.html.twig' %}
+
+{% trans_default_domain "thankyou" %}
+
+{% block title %}{{ 'thank_you_for_your_order'|trans({'%service_name%': service.getDomainNoSchema()}) }}{% endblock %}
+
+{% block facebook_event %}
+    {% if lead.counted and second_refresh == 0 %}
+        fbq('track', 'Purchase', {value: '{{ order.total }}', currency:'{{ order.currency }}'});
+        fbq('track', 'Lead');
+    {% endif %}
+{% endblock %}
+
+{# if counted render parent #}
+{% block google_tag_manager_head %}
+    {% if lead.counted and second_refresh == 0 %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{# if counted render parent #}
+{% block google_tag_manager_body %}
+    {% if lead.counted and second_refresh == 0 %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block tiktok_script %}
+    {% if lead.counted and second_refresh == 0 %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block tiktok_events %}
+    {% if lead.counted and second_refresh == 0 %}
+        ttq.track('CompletePayment')
+    {% endif %}
+{% endblock %}
+
+{% block taboola_events %}
+    {% if lead.counted and second_refresh == 0 %}
+        window._tfa.push({
+        notify: 'event',
+        name: 'conversion',
+        id: {{ taboolaPixel.getPixelId() }}
+        });
+    {% endif %}
+{% endblock %}
+
+{% block snapchat_events %}
+    {% if lead.counted and second_refresh == 0 %}
+        snaptr('track', 'PURCHASE');
+    {% endif %}
+{% endblock %}
+
+{% block google_events %}
+    {% if service is defined and service.getGoogleAnalyticsCode() is not null %}
+        gtag('event', 'purchase', {
+        "transaction_id": "{{ order.getServiceRelatedId() }}",
+        "value": {{ order.getTotal() }},
+        "currency": "{{ order.getCurrency() }}",
+        "tax": 0.00,
+        "shipping": 0,
+        "items": [
+        {
+        "id": "{{ order.getNProduct().getId() }}",
+        "name": "{{ order.getNProduct().getName() }}",
+        "quantity": 1,
+        "price": '{{ order.getTotal() }}'
+        }
+        ]
+        });
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {% if order_redirect is not empty %}
+        <script type="text/javascript">
+            var count = 0;
+            var count_to = {{ redirect_seconds }};
+            var redirectCounter = setInterval(function () {
+                count++;
+                $('#counter').text(count_to - count);
+                if (count >= count_to) {
+                    clearInterval(redirectCounter);
+                    window.location.href = '{{ order_redirect|raw }}';
+                }
+            }, 1000);
+        </script>
+    {% endif %}
+{% endblock %}
+
+{% block tracking_scripts %}
+    {% if (lead is defined and lead.isVerticalClick()) %}
+        <iframe referrerpolicy="no-referrer" src="{{ service.getDomain()|raw }}" height="1" width="1"
+                sandbox=""></iframe>
+    {% endif %}
+{% endblock %}

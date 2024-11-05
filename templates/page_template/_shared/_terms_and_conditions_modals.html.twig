@@ -1,0 +1,62 @@
+{% trans_default_domain "_terms_and_conditions" %}
+
+{% if generalTermsAndConditions is defined %}
+    <div class="modal fade" id="general_terms_modal" tabindex="-1" role="dialog" aria-labelledby="general_terms_modal">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body" style="color: black !important; padding: 15px;">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            style="float: right;"></button>
+                    {{ generalTermsAndConditions|raw }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if skillGameTerms is defined and skillGameTerms is not null %}
+
+    <div class="modal fade" id="promotional_terms_modal" tabindex="-1" role="dialog"
+         aria-labelledby="promotional_terms_modal">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body" style="color: black !important; padding: 15px;">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            style="float: right;"></button>
+                    {{ skillGameTerms|raw }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endif %}
+
+{% if campaign is defined and campaign.isV2Terms() and generalTermsExtract is defined %}
+    <div class="modal fade" id="general_terms_extract" tabindex="-1" role="dialog"
+         aria-labelledby="general_terms_extract">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body" style="color: black !important; padding: 15px;">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            style="float: right;"></button>
+                    {{ generalTermsExtract|raw }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if campaign is defined and privacyPolicyTerms is defined %}
+    <div class="modal fade" id="privacy_policy_terms_modal" tabindex="-1" role="dialog"
+         aria-labelledby="general_terms_extract">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body" style="color: black !important; padding: 15px;">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            style="float: right;"></button>
+                    {{ privacyPolicyTerms|raw }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

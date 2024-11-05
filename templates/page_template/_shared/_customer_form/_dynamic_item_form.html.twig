@@ -1,0 +1,595 @@
+<style type="text/css">
+
+    .customer-form-error {
+        display: block;
+        width: 100%;
+        margin-top: .25rem;
+        font-size: .875em;
+        color: #dc3545;
+    }
+
+    .did-floating-label-content {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .did-floating-label {
+        color: #1e4c82;
+        font-size: 17px;
+        font-weight: normal;
+        position: absolute;
+        pointer-events: none;
+        left: 15px;
+        top: 7px;
+        padding: 0 5px;
+        background: #fff;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+    }
+
+    .did-floating-input {
+        font-size: 12px;
+        display: block;
+        width: 100%;
+        height: 45px;
+        padding: 0 20px;
+        background: #fff;
+        color: #323840;
+        box-sizing: border-box;
+
+        &:focus {
+            outline: none;
+
+            ~ .did-floating-label {
+                top: -8px;
+                font-size: 13px;
+            }
+        }
+    }
+
+
+    .did-floating-input:not(:placeholder-shown) ~ .did-floating-label {
+        top: -8px;
+        font-size: 13px;
+    }
+
+
+    .iti.iti--allow-dropdown {
+        width: 100%;
+    }
+
+    #phone-input-error {
+        display: block;
+    }
+
+    .show {
+        display: block !important;
+    }
+
+    .hide {
+        display: none !important;
+    }
+
+    .border-red {
+        border-color: red !important;
+        color: white !important;
+        background: #DE7777 !important;
+    }
+
+    .border-green{
+        border: 2px solid #04c904 !important;
+
+    }
+
+
+</style>
+
+<form role="form" method="POST"
+                                       action="{{ path('app.front.campaign.new', {'_locale': app.request.getLocale(), 'slug': campaign.slug }) }}"
+                                       id="customer_form" class="form-horizontal" novalidate>
+    {{ form_start(customerForm) }}
+
+    <div class="row">
+        <div class="col-12 col-md-6 did-floating-label-content mt-3">
+            {{ form_widget(customerForm.first_name, { 'attr':
+                {
+                    'class': 'form-control required did-floating-input',
+                    'placeholder': " ",
+                    'autocorrect': 'off',
+                    'required': 'required',
+                    'pattern': '.{2,}',
+                    'autofocus': 'true'
+                }
+            }) }}
+            <label for="first_name" id="first_name_label"
+                   class="did-floating-label">{{ 'first_name'|trans({}, 'form_customer') }}</label>
+            <div class="invalid-feedback hide"></div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.first_name) }}
+            </div>
+        </div>
+        <div class="col-12 col-md-6 did-floating-label-content mt-3">
+            {{ form_widget(customerForm.last_name, { 'attr':
+                {
+                    'class': 'form-control required did-floating-input',
+                    'placeholder': " ",
+                    'autocorrect': 'off',
+                    'required': 'required',
+                    'pattern': '.{2,}'
+                }
+            }) }}
+            <label for="last_name" id="last_name_label"
+                   class="did-floating-label">{{ 'last_name'|trans({}, 'form_customer') }}</label>
+            <div class="invalid-feedback hide"></div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.last_name) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 did-floating-label-content mt-3">
+            {{ form_widget(customerForm.address, { 'attr':
+                {
+                    'class': 'form-control required did-floating-input',
+                    'placeholder': " ",
+                    'autocorrect': 'off',
+                    'required': 'required'
+                }
+            }) }}
+            <label for="address" id="address_label"
+                   class="did-floating-label">{{ 'address'|trans({}, 'form_customer') }}</label>
+            <div class="invalid-feedback hide"></div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.address) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6 did-floating-label-content mt-3">
+            {{ form_widget(customerForm.postcode, { 'attr':
+                {
+                    'class': 'form-control required did-floating-input',
+                    'placeholder': " ",
+                    'autocorrect': 'off',
+                    'minlength': '1',
+                    'maxlength': '30',
+                    'required': 'required'
+                }
+            }) }}
+            <label for="postcode" id="zipcode_label"
+                   class="did-floating-label">{{ 'zipcode'|trans({}, 'form_customer') }}</label>
+            <div class="invalid-feedback hide"></div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.postcode) }}
+            </div>
+        </div>
+        <div class="col-12 col-md-6 did-floating-label-content mt-3">
+            {{ form_widget(customerForm.city, { 'attr':
+                {
+                    'class': 'form-control required did-floating-input',
+                    'placeholder': " ",
+                    'autocorrect': 'off',
+                    'minlength': '1',
+                    'maxlength': '80',
+                    'required': 'required'
+                }
+            }) }}
+            <label for="city" id="city_label" class="did-floating-label">{{ 'city'|trans({}, 'form_customer') }}</label>
+            <div class="invalid-feedback hide"></div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.city) }}
+            </div>
+        </div>
+    </div>
+    {% if (lead.getCountryCode() == 'CA' or lead.getCountryCode() == 'MY') %}
+        <div class="row">
+            <div class="col-12 did-floating-label-content mt-3">
+                {{ form_widget(customerForm.state, { 'attr':
+                    {
+                        'class': 'form-control did-floating-input',
+                        'placeholder': " ",
+                        'autocorrect': 'off'
+                    }
+                }) }}
+                <label id="state_label" for="state"
+                       class="did-floating-label">{{ 'state'|trans({}, 'form_customer') }}</label>
+                <div class="invalid-feedback hide"></div>
+                <div class="customer-form-error">
+                    {{ form_errors(customerForm.state) }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-12 did-floating-label-content mt-3">
+            {% set email_field_attributes = {
+                'class': 'form-control required form-email did-floating-input',
+                'placeholder': " ",
+                'autocorrect': 'off',
+                'required': 'required',
+                'pattern': '.{6,}'
+            } %}
+            {% if app.request.query.get("lock_email") == 1 %}
+                {% set email_field_attributes = email_field_attributes|merge({ 'readonly': 'readonly' }) %}
+            {% endif %}
+            {{ form_widget(customerForm.email, { 'attr': email_field_attributes }) }}
+            <label id="email_label" for="email"
+                   class="did-floating-label">{{ 'email'|trans({}, 'form_customer') }}</label>
+
+            <div class="invalid-feedback hide"></div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.email) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 did-floating-label-content mt-3">
+            {{ form_widget(customerForm.phone, { 'attr':
+                {
+                    'class': 'form-control required did-floating-input',
+                    'placeholder': " ",
+                    'required': 'required',
+                    'autocorrect': 'off'
+                }
+            }) }}
+            {# <label for="phone" class="did-floating-label">{{ 'phone'|trans({}, 'form_customer') }}</label> #}
+            <div class="invalid-feedback hide" id="phone-input-error">
+            </div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.phone) }}
+            </div>
+        </div>
+    </div>
+
+    {% include termsCheckboxSection %}
+
+    <div class="form-group" style="margin-top: 15px;">
+        <button type="submit" name="submit" id="customer_submit_btn"
+                class="btn btn-success btn-lg btn-block">
+            <span>{{ pageText.get('PAY NOW')|trans({}, 'form_customer') }} </span>
+        <span class="glyphicon glyphicon-chevron-right"></span></button>
+    </div>
+
+    {{ form_widget(customerForm._token) }}
+
+    {{ form_end(customerForm, {'render_rest': false}) }}
+</form>
+
+<script type="text/javascript">
+    const errorMap = [
+        "{{ 'Phone number is not valid'|trans({}, 'validators') }}",
+        "{{ 'Invalid Country Code'|trans({}, 'validators') }}",
+        "{{ 'Too short'|trans({}, 'validators') }}",
+        "{{ 'Too long'|trans({}, 'validators') }}",
+        "{{ 'Not a number'|trans({}, 'validators') }}",
+        "{{ 'Phone number is not valid'|trans({}, 'validators') }}",
+        "Area code too short",
+        "Area code too long",
+        "Too short after IDD",
+        "Too long after IDD",
+        "Not a valid IDD",
+        "Not a valid NDC (National Destination Code)",
+        "Not a valid NDC or NDC+SN",
+        "Not a valid NDC or SN",
+        "Not a valid SN"
+    ];
+
+    var form = document.querySelector("#customer_form");
+    let invalidInputs = Array.from(document.querySelectorAll('input:invalid'));
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('#customer_form');
+        const inputs = form.querySelectorAll('input');
+        const termsInput = document.querySelector('#terms');
+        const termsSpan = termsInput.parentElement.querySelector("span");
+        const phoneInput = document.querySelector('#customer_phone');
+        const phoneErrorDiv = document.querySelector('#phone-input-error');
+        const stateInput = document.querySelector('#customer_state');
+
+        const iti = window.intlTelInput(phoneInput, {
+            autoPlaceholder: "polite",
+            utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/19.5.2/js/utils.min.js',
+            initialCountry: '{{ lead.getCountryCode() }}',
+            separateDialCode: true,
+            showSelectedDialCode: true, // TODO: if we want to show the +44 in the flag then true, if not false.
+            nationalMode: true, // TODO: converting the number with +44 in front when we enter the number, so the field value contains the prefix
+        });
+
+        const fieldMinimumLengths = {
+            customer_first_name: 2,
+            customer_last_name: 2,
+            customer_address: 5,
+            customer_postcode: 3,
+            customer_city: 2
+        };
+
+        const fieldNames = {
+            customer_first_name: "First Name",
+            customer_last_name: "Last Name",
+            customer_address: "Address",
+            customer_postcode: "Postcode",
+            customer_city: "City"
+        }
+
+        const fieldErrorMessages = {
+            customer_first_name: "{{ 'First name must be at least {{ limit }} characters long.'|trans({'{{ limit }}': 2}, 'validators') }}",
+            customer_last_name: "{{ 'Last name must be at least {{ limit }} characters long.'|trans({'{{ limit }}': 2}, 'validators') }}",
+            customer_address: "{{ 'Address must at least {{ limit }} characters long.'|trans({'{{ limit }}': 5}, 'validators') }}",
+            customer_postcode: "{{ 'Postcode must be at least {{ limit }} characters long.'|trans({'{{ limit }}': 3}, 'validators') }}",
+            customer_city: "{{ 'City must be at least {{ limit }} characters long.'|trans({'{{ limit }}': 2}, 'validators') }}",
+            customer_state: " {{ 'Please select a valid state.'|trans({}, 'validators') }}"
+        }
+
+        const fieldRequiredMessages = {
+            customer_first_name: "{{ 'First name field is required.'|trans({}, 'validators') }}",
+            customer_last_name: "{{ 'Last name field is required.'|trans({}, 'validators') }}",
+            customer_address: "{{ 'Address field is required.'|trans({}, 'validators') }}",
+            customer_postcode: "{{ 'Postcode field is required.'|trans({}, 'validators') }}",
+            customer_city: "{{ 'City field is required.'|trans({}, 'validators') }}",
+            customer_email: "{{ 'Email field is required.'|trans({}, 'validators') }}",
+        }
+
+        const validateLength = (name, value) => {
+            const minLength = fieldMinimumLengths[name];
+            const fieldName = fieldNames[name];
+            const fieldError = fieldErrorMessages[name];
+
+            if (minLength !== undefined && value.length < minLength) {
+                const errorMessage = fieldError;
+                return {isValid: false, errorMessage};
+            }
+
+            return {isValid: true, errorMessage: null};
+        };
+
+        const validateInputs = () => {
+            let isValid = true;
+
+            inputs.forEach(input => {
+                const inputId = input.id;
+                const inputValue = input.value.trim();
+                let errorMessage = '';
+
+                switch (inputId) {
+                    case 'customer_phone':
+                        errorMessage = validatePhone(input);
+                        break;
+                    case 'customer_first_name':
+                    case 'customer_last_name':
+                    case 'customer_address':
+                    case 'customer_postcode':
+                    case 'customer_city':
+                        errorMessage = validateFieldLength(inputId, inputValue);
+                        break;
+                    case 'customer_email':
+                        errorMessage = validateEmail(inputValue);
+                        break;
+                }
+                if (errorMessage) {
+                    isValid = false;
+                    showError(input, errorMessage);
+                }
+            });
+
+            if (stateInput) {
+                if (stateInput.value === '') {
+                    errorMessage = fieldErrorMessages['customer_state'];
+                    isValid = false;
+
+                    showError(stateInput, errorMessage);
+                }
+            }
+
+            return isValid;
+        };
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        const validatePhone = (input) => {
+            if (!input.value.trim()) {
+                return "{{ 'Phone number is required.'|trans({}, 'validators') }}";
+            } else if (phoneInput.value.length < 3) {
+                return `{{ 'Phone number is too short'|trans({}, 'validators') }}`;
+            } else if (phoneInput.value.length > 20) {
+                return `{{ 'Phone number is too long'|trans({}, 'validators') }}`;
+            }
+            return '';
+        };
+
+        const validateFieldLength = (inputId, value) => {
+            const lengthValidation = validateLength(inputId, value);
+            const requiredErrorMessage = fieldRequiredMessages[inputId];
+
+            if (!value) {
+                return requiredErrorMessage;
+            } else if (!lengthValidation.isValid) {
+                return lengthValidation.errorMessage;
+            }
+            return '';
+        };
+
+        const validateEmail = (value) => {
+            const validEmailError = "{{ 'Please enter a valid email address.'|trans({}, 'validators') }}"
+
+            if (!value) {
+                return fieldRequiredMessages['customer_email'];
+            } else if (!isValidEmail(value)) {
+                return validEmailError;
+            }
+
+            return '';
+        };
+
+        const validateTerms = (input) => {
+            const validEmailError = "{{ 'You must agree to the terms and conditions.'|trans({}, 'validators') }}"
+
+            if (!input.checked) {
+                return validEmailError;
+            }
+
+            return '';
+        };
+
+        const showError = (input, message) => {
+            const errorDiv = input.parentElement.querySelector('.invalid-feedback');
+
+            switch (input.id) {
+                case 'customer_phone':
+                    showPhoneError(input, message);
+                    break;
+                default:
+                    if (errorDiv) {
+                        showRegularError(input, errorDiv, message);
+                    }
+                    break;
+            }
+        };
+
+        const showPhoneError = (input, message) => {
+            input.classList.add("border-red");
+            phoneErrorDiv.innerHTML = message;
+            phoneErrorDiv.classList.remove("hide");
+            phoneErrorDiv.classList.add("show");
+        };
+
+        const showTermsError = () => {
+            termsSpan.classList.add("border-red");
+        };
+
+        const showRegularError = (input, errorDiv, message) => {
+            input.classList.add("border-red");
+            errorDiv.innerHTML = message;
+            errorDiv.classList.remove("hide");
+            errorDiv.classList.add("show");
+
+
+        };
+
+        const handleBlur = (input, errorDiv) => {
+            input.classList.remove('border-red');
+            errorInputRemove();
+            if (errorDiv) {
+                errorDiv.classList.remove('show');
+                errorDiv.classList.add('hide');
+            }
+        };
+
+        inputs.forEach(input => {
+            input.addEventListener('blur', () => {
+                const errorDiv = input.parentElement.querySelector('.invalid-feedback');
+
+                switch (input.id) {
+                    case 'customer_phone':
+                        if (phoneErrorDiv) {
+                            phoneErrorDiv.classList.remove('show');
+                            phoneErrorDiv.classList.add('hide');
+                        }
+                        break;
+                    case 'terms':
+                        termsSpan.classList.remove('border-red');
+                        break;
+                }
+
+                handleBlur(input, errorDiv);
+            });
+        });
+
+        if (stateInput) {
+            stateInput.addEventListener('blur', () => {
+                const errorDiv = stateInput.parentElement.querySelector('.invalid-feedback');
+                handleBlur(stateInput, errorDiv);
+            });
+        }
+
+
+        form.addEventListener('submit', function (event) {
+            errorLabel();
+            if (!validateInputs()) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                return;
+            }
+
+        });
+
+
+        // const lavel = document.querySelector('.did-floating-input');
+        // lavel.addEventListener("input", function () {
+        //
+        // });
+
+
+        function errorInputRemove() {
+            const first_name_label = document.querySelector('#first_name_label');
+            const last_name_label = document.querySelector('#last_name_label');
+            const address_label = document.querySelector('#address_label');
+            const zipcode_label = document.querySelector('#zipcode_label');
+            const city_label = document.querySelector('#city_label');
+            const email_label = document.querySelector('#email_label');
+
+            first_name_label.classList.remove('border-red')
+            last_name_label.classList.remove('border-red')
+            address_label.classList.remove('border-red')
+            zipcode_label.classList.remove('border-red')
+            city_label.classList.remove('border-red')
+            email_label.classList.remove('border-red')
+        }
+
+        function errorLabel() {
+
+            const first_name_label = document.querySelector('#first_name_label');
+            const last_name_label = document.querySelector('#last_name_label');
+            const address_label = document.querySelector('#address_label');
+            const zipcode_label = document.querySelector('#zipcode_label');
+            const city_label = document.querySelector('#city_label');
+            const email_label = document.querySelector('#email_label');
+
+            var a = document.getElementById('customer_first_name').value;
+            var b = document.getElementById('customer_last_name').value;
+            var c = document.getElementById('customer_address').value;
+            var d = document.getElementById('customer_postcode').value;
+            var e = document.getElementById('customer_email').value;
+            var f = document.getElementById('customer_city').value;
+
+
+            if ((a == null || a == "")) {
+                first_name_label.classList.add('border-red')
+            }
+            if ((b == null || b == "")) {
+                last_name_label.classList.add('border-red')
+            }
+            if ((c == null || c == "")) {
+                address_label.classList.add('border-red')
+            }
+            else {
+                address_label.classList.remove('border-red')
+            }
+            if ((d == null || d == "")) {
+                zipcode_label.classList.add('border-red')
+            }
+            else {
+                zipcode_label.classList.remove('border-red')
+            }
+            if ((e == null || e == "")) {
+                email_label.classList.add('border-red')
+            }
+            else {
+                email_label.classList.remove('border-red')
+            }
+            if ((f == null || f == "")) {
+                city_label.classList.add('border-red')
+            }
+            else {
+                city_label.classList.remove('border-red')
+            }
+        }
+
+    });
+
+
+</script>

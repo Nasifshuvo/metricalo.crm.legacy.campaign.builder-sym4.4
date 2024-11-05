@@ -1,0 +1,109 @@
+$('document').ready(function() {
+
+    function validateCreditCardNumber(cardNumber) {
+
+        cardNumber.replace(/\s/g, "");
+
+        cardNumber = cardNumber.split(' ').join("");
+        if (parseInt(cardNumber) <= 0 || (!/\d{15,16}(~\W[a-zA-Z])*$/.test(cardNumber)) || cardNumber.length > 16) {
+            return false;
+        }
+        var carray = new Array();
+        for (let i = 0; i < cardNumber.length; i++) {
+            carray[carray.length] = cardNumber.charCodeAt(i) - 48;
+        }
+        carray.reverse();
+        var sum = 0;
+        for (let i = 0; i < carray.length; i++) {
+            var tmp = carray[i];
+            if ((i % 2) !== 0) {
+                tmp *= 2;
+                if (tmp > 9) {
+                    tmp -= 9;
+                }
+            }
+            sum += tmp;
+        }
+        return ((sum % 10) == 0);
+    }
+
+    $('#card-date').mask('00/00');
+    $('#credit_card_raw_number').mask('0000 0000 0000 0000');
+
+    {# We have to split this in two for sys to work #}
+    $('#card-date').bind('keypress keyup blur input', function () {
+
+        val = $(this).val();
+
+        // MM/YY
+        //if (val.length >= 5) {
+        var $monthInput = $('#credit_card_expiration_month')
+        var $yearInput = $('#credit_card_expiration_year')
+        var $expErrorMsg = $('#card-exp-feedback');
+
+        if (val.indexOf('/') !== -1) {
+            split = val.split('/');
+
+            const month = Number(split[0])
+            const year = Number(split[1])
+
+            if(month > 0 && month <= 12 && year >= new Date().getFullYear().toString().substring(2)){
+                $submit_button.removeAttr("disabled");
+
+                $monthInput.val(split[0]);
+                $yearInput.val('20' + split[1]);
+                $expErrorMsg.addClass('hidden');                
+            } else {
+                $submit_button = $('#credit_card_submit_btn');
+                $submit_button.prop('disabled', true);
+                $expErrorMsg.removeClass('hidden');                
+
+                if (val.length >= 7) {
+                    $expErrorMsg.show();
+                }
+            }
+        } else {
+            $monthInput.val('');
+            $yearInput.val('');
+        }
+
+        console.log('month val: ' + $monthInput.val())
+        console.log('year val: ' + $yearInput.val())
+    });
+
+    $('#credit_card_raw_number').bind('keypress keyup blur input', function() {
+        $('#credit_card_number_no_mask').val($(this).val().replace(/\s/g,''));
+    });
+
+    $('#payment-form').submit(function(){
+
+        var $ccNoMask = $('#credit_card_number_no_mask');
+        if ($ccNoMask.length && $ccNoMask.val() !== undefined) {
+
+            luhnCheck = validateCreditCardNumber($ccNoMask.val());
+            if (!luhnCheck) {
+                swal('Error', "{{ pageText.get('Invalid card number entered, please try again.') }}");
+                return false;
+            }
+        }
+
+        {# Submit button spinner #}
+        var $submit_button = $('#credit_card_submit_btn');
+        var $submit_text = $submit_button.find('#complete-text')
+        var $spinner = $submit_button.find('#spinner')
+
+        $submit_button.prop('disabled', true);
+        $submit_text.addClass("hidden");
+        $spinner.removeClass("hidden");
+
+        setTimeout(function(){
+            $submit_button.removeAttr("disabled");
+            $submit_text.removeClass("hidden");
+            $spinner.addClass("hidden");
+
+        }, 35000);
+    });
+
+
+
+});

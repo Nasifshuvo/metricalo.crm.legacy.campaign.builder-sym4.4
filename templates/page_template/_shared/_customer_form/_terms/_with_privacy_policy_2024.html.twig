@@ -1,0 +1,50 @@
+<div class="checkbox form-checkbox">
+    <label class="custom-form__row checkbox">
+        <input type="checkbox" class="big-checkbox" required="required" name="customer[terms]" id="terms"
+               value="true"
+               data-validator-message="{{ 'you_must_accept_the_terms_and_conditions'|trans({}, 'form_customer') }}">
+        <span>
+            {% if campaign.isContest() %}
+
+                {{ 'i.am.18.years.old.and.accept.the.terms.and.conditions.and.the.promotional.terms'|trans({
+                    '{{ start_a_terms }}': '<a class="termslink" data-bs-toggle="modal" data-bs-target="#general_terms_modal">',
+                    '{{ end_a }}': '</a>',
+                    '{{ start_a_promotion }}': '<a class="termslink" data-bs-toggle="modal" data-bs-target="#promotional_terms_modal">',
+                }, 'form_customer')|raw }}
+
+            {% else %}
+                {{ pageText.get('I confirm that i am above 18 years of age.') }}
+            {% endif %}
+
+            {% if campaign.getVertical() is empty %}
+                <br>
+                {% if not product.hasTrial() %}
+                    {{ 'is.only.valid.for.new.members.of.no.trial'|trans({'%subscription_name%': product.getSubscriptionName(), '%trial_days%': product.getSubscriptionTrialDays(), '%trial_price%': product.getPrice()|priceIntl(product.getCurrency(), lead.getIntlLocale()), '%subscription_price%': product.getSubscriptionPrice()|priceIntl(product.getCurrency(), lead.getIntlLocale()), '%subscription_interval_days%': product.getSubscriptionIntervalDays()}, 'form_customer')|raw }}
+                {% endif %}
+            {% endif %}
+                </span>
+    </label>
+</div>
+
+{% if not campaign.isContest() %}
+    <div class="checkbox form-checkbox">
+        <label class="custom-form__row checkbox">
+            <input type="checkbox" class="big-checkbox" required="required" name="customer[terms_and_policy]"
+                   id="terms_and_policy"
+                   value="true"
+                   data-validator-message="{{ 'you_must_accept_the_terms_and_conditions'|trans({}, 'form_customer') }}">
+            <span>
+                {{ pageText.get('I accept the') }}
+                    <a class="termslink" data-bs-toggle="modal" data-bs-target="#general_terms_modal">
+                        {{ pageText.get('terms and conditions') }}</a>
+                    {{ pageText.get('and the') }}
+                    <a class="termslink" data-bs-toggle="modal" data-bs-target="#privacy_policy_terms_modal">{{ pageText.get('Privacy Policy') }}</a>
+                    {{ pageText.get('When you sign up for the service, you receive a %product_subscription_trial_days%-days trial, which you pay %product_price%. If you choose not to cancel the trial within the trial period, you will be charged %product_subscription_price% every %product_subscription_interval_days% days, until you cancel your membership.') }}
+            </span>
+        </label>
+    </div>
+{% endif %}
+
+{% if campaign.getVertical() is empty %}
+    {% include 'page_template/_shared/_customer_form/_terms/_accept_newsletter.html.twig' %}
+{% endif %}

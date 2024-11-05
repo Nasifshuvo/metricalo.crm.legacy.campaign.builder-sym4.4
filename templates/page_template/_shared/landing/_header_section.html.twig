@@ -1,0 +1,53 @@
+{% if (campaign.isContest()) %}
+
+    {% set free_contest_link = service.getCheckoutDomainNameWithScheme() ~ path('enter_contest', { 'service_unique_id_token': service.getUniqueIdToken(), 'campaign_slug': campaign.getSlug() }) %}
+    {% set direct_signup_link = service.getCheckoutDomainNameWithScheme() ~ path('app.front.campaign.new', { 'slug': service.getDefaultSignUpCampaign().getSlug(), '_locale': 'en' }) %}
+
+    <script type="text/javascript">
+        $j = jQuery.noConflict();
+
+        $j("body").css("background-position-y", "36px");
+
+        {# $j(document).ready(function () { #}
+        $j(window).load(function () {
+
+            {% if lead.getAffiliate() is not null and lead.getAffiliate().isEnableShortHeader() %}
+
+            var header_content = `{{ 'campaign.contest.header.short'|trans({
+                '%service_name%': service.getDomainNoSchema(),
+                '%trial_days%': product.getSubscriptionTrialDays(),
+                '%product_name%': campaign.getSecondaryAdvertisedItemName(),
+                '%subscription_price%': product.getSubscriptionPrice()|priceIntl(product.getCurrency(), lead.getIntlLocale())|raw,
+                '%subscription_interval_days%': product.getSubscriptionIntervalDays(),
+                '%trial_price%': product.getPrice()|priceIntl(product.getCurrency(), lead.getIntlLocale())|raw,
+                '%contest_expiration%': skill_game_expiration_date,
+                '%a_contest_start%': "<a id=\'free_e_link\' href=\'"~free_contest_link~"\'>"|trim|raw,
+                '%a_contest_end%': "</a>"|trim|raw,
+                '%a_direct_start%': "<a id=\'free_e_link\' href=\'"~direct_signup_link~"\'>"|trim|raw,
+                '%a_direct_end%': "</a>"|trim|raw,
+            }, 'contest_information')|trim|raw }}`;
+
+            {% else %}
+
+            var header_content = `{{ 'campaign.contest.header.short'|trans({
+                '%service_name%': service.getDomainNoSchema(),
+                '%trial_days%': product.getSubscriptionTrialDays(),
+                '%product_name%': campaign.getSecondaryAdvertisedItemName(),
+                '%subscription_price%': product.getSubscriptionPrice()|priceIntl(product.getCurrency(), lead.getIntlLocale())|raw,
+                '%subscription_interval_days%': product.getSubscriptionIntervalDays(),
+                '%trial_price%': product.getPrice()|priceIntl(product.getCurrency(), lead.getIntlLocale())|raw,
+                '%contest_expiration%': skill_game_expiration_date,
+                '%a_contest_start%': "<a id=\'free_e_link\' href=\'"~free_contest_link~"\'>"|trim|raw,
+                '%a_contest_end%': "</a>"|trim|raw,
+                '%a_direct_start%': "<a id=\'free_e_link\' href=\'"~direct_signup_link~"\'>"|trim|raw,
+                '%a_direct_end%': "</a>"|trim|raw,
+            }, 'contest_information')|trim|raw }}`;
+
+            {% endif %}
+
+            var header_text = "<div class='top-bar'><p>" + header_content + "</p></div>";
+            $j("body").before(header_text);
+        });
+    </script>
+
+{% endif %}

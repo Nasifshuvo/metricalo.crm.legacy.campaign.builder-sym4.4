@@ -1,0 +1,258 @@
+<style type="text/css">
+
+    .customer-form-error {
+        display: block;
+        width: 100%;
+        margin-top: .25rem;
+        font-size: .875em;
+        color: #dc3545;
+    }
+</style>
+
+<form role="form" method="POST"
+                                       action="{{ path('app.front.campaign.new', {'_locale': app.request.getLocale(), 'slug': campaign.slug }) }}"
+                                       id="customer_form" class="needs-validation form-horizontal" novalidate>
+    {{ form_start(customerForm) }}
+
+    <div class="row">
+        <div class="col-md-6">
+            <label for="first_name" class="form-label">{{ 'first_name'|trans({}, 'form_customer') }}</label>
+            {{ form_widget(customerForm.first_name, { 'attr':
+                {
+                    'class': 'form-control required input',
+                    'placeholder': 'first_name'|trans({}, 'form_customer'),
+                    'autocorrect': 'off',
+                    'required': 'required',
+                    'pattern': '.{2,}',
+                    'autofocus': 'true'
+                } }) }}
+            <div class="invalid-feedback">
+                {{ 'First name must be at least {{ limit }} characters long.'|trans({'{{ limit }}': 2}, 'validators') }}
+            </div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.first_name) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="last_name" class="form-label">{{ 'last_name'|trans({}, 'form_customer') }}</label>
+            {{ form_widget(customerForm.last_name, { 'attr':
+                {
+                    'class': 'form-control required input',
+                    'placeholder': 'last_name'|trans({}, 'form_customer'),
+                    'autocorrect': 'off',
+                    'required': 'required',
+                    'pattern': '.{2,}'
+                } }) }}
+            <div class="invalid-feedback">
+                {{ 'Last name must be at least {{ limit }} characters long.'|trans({'{{ limit }}': 2}, 'validators') }}
+            </div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.last_name) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <label for="address" class="form-label">{{ 'address'|trans({}, 'form_customer') }}</label>
+            {{ form_widget(customerForm.address, { 'attr':
+                {
+                    'class': 'form-control required input',
+                    'placeholder': 'address'|trans({}, 'form_customer'),
+                    'autocorrect': 'off',
+                    'required': 'required'
+                } }) }}
+            <div class="invalid-feedback">
+                {{ 'Address must at least {{ limit }} characters long.'|trans({'{{ limit }}': 5}, 'validators') }}
+            </div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.address) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="postcode" class="form-label">{{ 'zipcode'|trans({}, 'form_customer') }}</label>
+            {{ form_widget(customerForm.postcode, { 'attr':
+                {
+                    'class': 'form-control required input',
+                    'placeholder': 'zipcode'|trans({}, 'form_customer'),
+                    'autocorrect': 'off',
+                    'minlength': '1',
+                    'maxlength': '30',
+                    'required': 'required'
+                } }) }}
+            <div class="invalid-feedback">
+                {{ 'Postcode must be at least {{ limit }} characters long.'|trans({'{{ limit }}': 3}, 'validators') }}
+            </div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.postcode) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="city" class="form-label">{{ 'city'|trans({}, 'form_customer') }}</label>
+            {{ form_widget(customerForm.city, { 'attr':
+                {
+                    'class': 'form-control required input',
+                    'placeholder': 'city'|trans({}, 'form_customer'),
+                    'autocorrect': 'off',
+                    'minlength': '1',
+                    'maxlength': '80',
+                    'required': 'required'
+                } }) }}
+            <div class="invalid-feedback">
+                {{ 'City must be at least {{ limit }} characters long.'|trans({'{{ limit }}': 2}, 'validators') }}
+            </div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.city) }}
+            </div>
+        </div>
+    </div>
+    {% if (lead.getCountryCode() == 'CA' or lead.getCountryCode() == 'MY') %}
+        <div class="row">
+            <div class="col-md-12">
+                <label for="state" class="form-label">{{ 'state'|trans({}, 'form_customer') }}</label>
+                {{ form_widget(customerForm.state, { 'attr':
+                    {
+                        'class': 'form-control input',
+                        'autocorrect': 'off'
+                    } }) }}
+                <div class="invalid-feedback">
+                    {{ 'Please select a valid state.'|trans({}, 'validators') }}
+                </div>
+                <div class="customer-form-error">
+                    {{ form_errors(customerForm.state) }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-6">
+            <label for="email" class="form-label">{{ 'email'|trans({}, 'form_customer') }}</label>
+            {% set email_field_attributes = {
+                'class': 'form-control required input',
+                'placeholder': 'email'|trans({}, 'form_customer'),
+                'autocorrect': 'off',
+                'required': 'required',
+                'pattern': '.{6,}'
+            } %}
+            {% if app.request.query.get("lock_email") == 1 %}
+                {% set email_field_attributes = email_field_attributes|merge({ 'readonly': 'readonly' }) %}
+            {% endif %}
+            {{ form_widget(customerForm.email, { 'attr': email_field_attributes }) }}
+
+            <div class="invalid-feedback">
+                {{ 'Please enter a valid email address.'|trans({}, 'validators') }}
+            </div>
+            <div class="customer-form-error">
+                {{ form_errors(customerForm.email) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <label for="state" class="form-label">{{ 'phone'|trans({}, 'form_customer') }}</label>
+                {{ form_widget(customerForm.phone, { 'attr':
+                    {
+                        'class': 'form-control required input',
+                        'placeholder': 'phone'|trans({}, 'form_customer'),
+                        'required': 'required',
+                        'autocorrect': 'off',
+                        'pattern': '^[+ ]?[0-9]{5,18}$'
+                    } }) }}
+                <div class="invalid-feedback">
+                    {{ 'Please enter a valid phone number without a country prefix.'|trans({}, 'validators') }}
+                </div>
+                <div class="customer-form-error">
+                    {{ form_errors(customerForm.state) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="checkbox form-checkbox">
+                <label class="maxwidth">
+                    <input type="checkbox" class="big-checkbox" required="required" name="customer[terms]" id="terms"
+                           value="true"
+                           data-validator-message="{{ 'you_must_accept_the_terms_and_conditions'|trans({}, 'form_customer') }}">
+                    <span>
+                     {% if campaign.isContest() %}
+
+                         {{ 'i.am.18.years.old.and.accept.the.terms.and.conditions.and.the.promotional.terms'|trans({
+                             '{{ start_a_terms }}': '<a class="termslink" data-bs-toggle="modal" data-bs-target="#general_terms_modal">',
+                             '{{ end_a }}': '</a>',
+                             '{{ start_a_promotion }}': '<a class="termslink" data-bs-toggle="modal" data-bs-target="#promotional_terms_modal">',
+                         }, 'form_customer')|raw }}
+
+                     {% else %}
+
+                         {{ 'i.am.18.years.old.and.accept.the.terms.and.conditions'|trans({
+                             '{{ start_a_terms }}': '<a class="termslink" data-bs-toggle="modal" data-bs-target="#general_terms_modal">',
+                             '{{ end_a }}': '</a>'
+                         }, 'form_customer')|raw }}
+
+                         {% if campaign.isV2Terms() %}
+                             {{ 'and.the.subscription.terms.and.conditions'|trans({
+                                 '{{ start_a_terms }}': '<a class="termslink" data-bs-toggle="modal" data-bs-target="#general_terms_extract">',
+                                 '{{ end_a }}': '</a>'
+                             }, 'form_customer')|raw }}
+                         {% endif %}
+                     {% endif %}
+
+                        {% if campaign.getVertical() is empty %}
+                            <br>
+                            {% if product.hasTrial() %}
+                                {{ 'is_only_valid_for_new_members_of'|trans({'%subscription_name%': product.getSubscriptionName(), '%trial_days%': product.getSubscriptionTrialDays(), '%trial_price%': product.getPrice()|priceIntl(product.getCurrency(), lead.getIntlLocale()), '%subscription_price%': product.getSubscriptionPrice()|priceIntl(product.getCurrency(), lead.getIntlLocale()), '%subscription_interval_days%': product.getSubscriptionIntervalDays()}, 'form_customer')|raw }}
+                            {% else %}
+                                {{ 'is.only.valid.for.new.members.of.no.trial'|trans({'%subscription_name%': product.getSubscriptionName(), '%trial_days%': product.getSubscriptionTrialDays(), '%trial_price%': product.getPrice()|priceIntl(product.getCurrency(), lead.getIntlLocale()), '%subscription_price%': product.getSubscriptionPrice()|priceIntl(product.getCurrency(), lead.getIntlLocale()), '%subscription_interval_days%': product.getSubscriptionIntervalDays()}, 'form_customer')|raw }}
+                            {% endif %}
+                        {% endif %}
+                </span>
+                </label>
+            </div>
+            {% if campaign.getVertical() is empty %}
+                <div class="checkbox form-checkbox">
+                    <label class="maxwidth">
+                        {{ form_widget(customerForm.accepting_newsletter, { 'attr':
+                            {
+                                'class': 'big-checkbox',
+                            } }) }}
+                        <span>{{ 'Tick.this.box.to.receive.offers.promotions.and.other.commercial.messages.you.can.unsubscribe.at.any.time'|trans({}, 'form_customer') }}</span>
+                    </label>
+                </div>
+                <br>
+            {% endif %}
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" name="submit" id="customer_submit_btn"
+                class="btn btn-success btn-lg btn-block">{{ 'continue'|trans({}, 'form_customer') }} <span
+                class="glyphicon glyphicon-chevron-right"></span></button>
+    </div>
+
+    {{ form_widget(customerForm._token) }}
+
+    {{ form_end(customerForm, {'render_rest': false}) }}
+</form>
+
+<script type="text/javascript">
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>

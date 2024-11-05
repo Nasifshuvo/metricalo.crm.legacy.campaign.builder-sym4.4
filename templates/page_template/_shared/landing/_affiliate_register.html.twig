@@ -1,0 +1,7 @@
+{% if (campaign.getVertical()) %}
+    {% if (lead.getAffiliate() and lead.getAffiliate().isShowLandingRegistration()) %}
+        <div class="caf_cont">
+            <a href="{{ absolute_url(path('affiliate_contact', {'_locale': 'en'})) }}">Affiliates</a>
+        </div>
+    {% endif %}
+{% endif %}

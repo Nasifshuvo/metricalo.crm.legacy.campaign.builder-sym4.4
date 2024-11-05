@@ -1,0 +1,12 @@
+{% if campaign is defined and lead is defined and campaign.getVertical() %}
+    <div class="container">
+        {% if (lead.isDesktop() and lead.getAffiliate() and lead.getAffiliate().isShowLandingRegistration()) %}
+            <div class="caf_cont">
+                <a href="{{ absolute_url(path('affiliate_contact', {'_locale': 'en'})) }}">Affiliates</a>
+            </div>
+        {% endif %}
+        <div class="caf_cont">
+            <a target="_blank" href="{{ absolute_url(path('report_abuse', {'_locale': 'en'})) }}">Report abuse</a>
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,8 @@
+text:
+    0: Price
+    1: '%product_subscription_price%'
+    2: 'Every %product_subscription_interval_days% days'
+    15: 'Please fill form below'
+    26: '%product_subscription_trial_days%-days trial period / %product_price%'
+theme:
+    images: { background: 'https://webuildix.com/builder/webuildixcom/theme/images/hero/office-team.jpg', list_style_img: 'https://files.fieryx.com/ostatic/checker.png' }

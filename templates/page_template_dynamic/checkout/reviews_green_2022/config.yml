@@ -1,0 +1,27 @@
+text:
+    0: 'Secure Payment'
+    1: '1. Information'
+    2: '2. Payment'
+    3: 'Payment method'
+    9: 'Order Summary'
+    10: 'Today''s Cost'
+    12: Total
+    13: 'Technical Support'
+    14: 'Secure Checkout'
+    15: 'Safe Browsing'
+    17: 'Fenella Lara'
+    18: 'I received my product yesterday. Fast and outstanding customer service! Thanks a lot.'
+    19: 'Maison Parry'
+    20: 'Fast and easy to use!'
+    21: 'Riaan Burt'
+    22: 'I got an amazing product only 2 days after signing up! Everything was on point!'
+    23: 'Chelsea Howard'
+    24: 'Never have I spent my money that well. Great service and delivery.. Guess I was lucky this time! See you next time.'
+    32: '%website_domain%'
+    33: '%company_name%, %company_business_number% - %company_address%, %company_city% %company_postcode%, %company_country%'
+    34: '%descriptor% will be displayed on your bank statement as a charge from %company_name%'
+    35: 'You will be billed by %company_name%, an e-commerce merchant located in the %company_country%.'
+    36: 'By completing this purchase, you consent to a %product_subscription_trial_days%-day trial membership with %website_domain% for %product_price%, and you acknowledge that unless you cancel within due time, You will be enrolled in the full %product_subscription_interval_days%-day membership at the price of %product_subscription_price% every %product_subscription_interval_days% days. If the trial is not cancelled, you will be charged %product_subscription_price% every %product_subscription_interval_days% days until the membership is canceled.'
+    37: 'All purchases are covered by a 14-day full refund guarentee. The decision to reimburse a charge does not insure the obligation to reimburse other subsequent expenses. Any charge refunded by %website_domain% for any reason, will be refunded by the payment method used for the original transaction. %website_domain% will not credit any cash charges. Any request for refund must be made by contacting customer service.'
+theme:
+    images: { cards: 'https://i.imgur.com/B171wqD.png', tech: 'https://i.imgur.com/dUMlCTa.png', secure: 'https://i.imgur.com/zHuLyqk.png', safe: 'https://i.imgur.com/yXxxfQg.png' }

@@ -1,0 +1,52 @@
+<script type="text/javascript">
+    var check_for_order;
+
+    var order_id = '{{ order.getUniqueIdentifier() }}';
+    var order_status_ok = JSON.parse('{{ order_status_ok|json_encode|raw }}');
+    var order_status_failed = JSON.parse('{{ order_status_failed|json_encode|raw }}');
+    var refresh_timer = 10000;
+
+    $('document').ready(function () {
+
+        getStatus(order_id);
+
+        check_for_order = setInterval(function () {
+            getStatus(order_id);
+        }, refresh_timer);
+
+        function getStatus(order_id) {
+
+            var getConfirmationStatusRoute = "{{ path('api_1.get_confirmation_order_status', {'api_kind': 'l', '_format': 'json'}) }}";
+
+            var separator = getConfirmationStatusRoute.indexOf('?') !== -1 ? '&' : '?';
+
+            currentRequest = getConfirmationStatusRoute + separator + 'order_id=' + order_id;
+
+            $.get(currentRequest, function (data) {
+
+                if ($.inArray(data['status'], order_status_ok) !== -1) {
+
+                    thankYouRoute = "{{ path('app.front.order.thankyou') }}";
+
+                    currentRequest = thankYouRoute + '?order_id=' + order_id;
+
+                    window.location.href = currentRequest;
+
+                } else if ($.inArray(data['status'], order_status_failed) !== -1) {
+                    order_has_failed();
+                }
+            });
+
+            //.fail(function(data) {
+            //    order_has_failed();
+            //});
+        }
+
+        function order_has_failed() {
+
+            window.location.href = "{{ absolute_url(path('app.front.order.new', {'error': '1'})|raw) }}";
+
+            clearInterval(check_for_order);
+        }
+    });
+</script>

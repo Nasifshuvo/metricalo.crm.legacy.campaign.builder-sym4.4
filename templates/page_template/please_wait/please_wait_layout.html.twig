@@ -1,0 +1,82 @@
+{% extends 'page_template/base_layout.html.twig' %}
+
+{% trans_default_domain "awaiting_confirmation" %}
+
+{% block title %}{{ 'awaiting_confirmation'|trans }}{% endblock %}
+
+{% block javascripts %}
+    {% if block_redirect is not same as(true) %}
+
+        <script type="text/javascript">
+            var check_for_order;
+
+            var order_id = '{{ order.getUniqueIdentifier() }}';
+            var order_status_ok = JSON.parse('{{ order_status_ok|json_encode|raw }}');
+            var order_status_failed = JSON.parse('{{ order_status_failed|json_encode|raw }}');
+            var refresh_timer = JSON.parse('{{ refresh_timer|json_encode|raw }}');
+            var order_checks = 0;
+
+            $('document').ready(function () {
+
+                setTimeout(function () {
+
+                    getStatus(order_id);
+                    order_checks++;
+
+                    check_for_order = setInterval(function () {
+                        getStatus(order_id);
+                    }, refresh_timer[1]);
+
+                }, refresh_timer[0]);
+
+                function getStatus(order_id) {
+
+                    var getConfirmationStatusRoute = "{{ path('api_1.get_confirmation_order_status', {'api_kind': 'l', '_format': 'json'}) }}";
+
+                    var separator = getConfirmationStatusRoute.indexOf('?') !== -1 ? '&' : '?';
+
+                    currentRequest = getConfirmationStatusRoute + separator + 'order_id=' + order_id;
+
+                    $.get(currentRequest, function (data) {
+
+                        if ($.inArray(data['status'], order_status_ok) !== -1) {
+
+                            thankYouRoute = "{{ path('app.front.order.thankyou') }}";
+
+                            currentRequest = thankYouRoute + '?order_id=' + order_id;
+
+                            window.location.href = currentRequest;
+
+                        } else {
+                            order_has_failed();
+                        }
+                    })
+                        .fail(function (data) {
+                            order_has_failed();
+                        })
+                        .always(function (data) {
+                            if (order_checks >= refresh_timer[2]) {
+                                order_has_failed();
+                            }
+
+                            order_checks++;
+                        });
+                }
+
+                function order_has_failed() {
+
+                    window.location.href = "{{ absolute_url(path('app.front.order.new', {'error': '1'})|raw) }}";
+
+                    clearInterval(check_for_order);
+
+                    $('.page .loading').remove();
+                    $primary_message = $('#primary-message');
+                    $primary_message.removeClass('verified');
+                    $primary_message.addClass('error');
+                    $primary_message.find('.success-msg').hide();
+                    $primary_message.find('.error-msg').show();
+                }
+            });
+        </script>
+    {% endif %}
+{% endblock %}

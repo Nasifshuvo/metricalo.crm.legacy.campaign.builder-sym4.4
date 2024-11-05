@@ -1,0 +1,45 @@
+{% if campaign.getVertical() %}
+    <section class="fourth">
+        <div class="background-footer">
+            <div class="container">
+                {% if (campaign.isContest() and campaign.getSkillGameItemVendorName()) %}
+                    <div class="row">
+                        <div class="col-sm-12"><p
+                                class="text-bold promotion-disclaimer">{{ "this.promotion.is.not.made.by.or.in.cooperation.with.%brand_name%"|trans({'%brand_name%': campaign.getSkillGameItemVendorName()}, 'contest_information') }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-md-3 footer-col">
+                        <p class="text-bold">{{ 'campaign.footer.what.is'|trans({'%service_name%': service.getDomainNoSchema()}, 'contest_information') }}</p>
+                        <span>
+                        {{ service.getDescription(app.request.getLocale()) }}
+                    </span>
+                    </div>
+                    <div class="col-md-3 footer-col">
+                        <p class="text-bold">{{ 'campaign.footer.price.terms'|trans({'%service_name%': service.getDomainNoSchema()}, 'contest_information') }}</p>
+                        <span>
+                        {{ 'campaign.footer.price.terms.content'|trans({'%subscription_price%': product.getSubscriptionPrice()|priceIntl(product.getCurrency(), lead.getIntlLocale())|raw, '%trial_price%': product.getPrice()|priceIntl(product.getCurrency(), lead.getIntlLocale())|raw, '%trial_days%': product.getSubscriptionTrialDays(),  '%support_email%': service.supportEmail, '%support_phone%': service.supportPhone, '%subscription_interval_days%': product.getSubscriptionIntervalDays()}, 'contest_information')|raw }}
+                    </span>
+                    </div>
+
+                    {% if (campaign.isContest()) %}
+                        <div class="col-md-3 footer-col">
+                            <p class="text-bold">{{ 'campaign.footer.contest.terms'|trans({}, 'contest_information') }}</p>
+                            <span>
+                        {{ 'campaign.footer.contest.terms.content'|trans({'%product_name%': campaign.getSecondaryAdvertisedItemName(), '%support_email%': service.supportEmail, '%support_phone%': service.supportPhone, '%contest_expiration%': skill_game_expiration_date }, 'contest_information') }}
+                    </span>
+                        </div>
+                    {% endif %}
+
+                    <div class="col-md-3 footer-col">
+                        <p class="text-bold">{{ 'campaign.footer.contest.support'|trans({'%service_name%': service.getDomainNoSchema()}, 'contest_information') }}</p>
+                        <span>
+                        {{ 'campaign.footer.contest.support.content'|trans({'%service_name%': service.getDomainNoSchema(), '%support_email%': service.supportEmail, '%support_phone%': service.supportPhone }, 'contest_information') }}
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}

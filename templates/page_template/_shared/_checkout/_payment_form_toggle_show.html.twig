@@ -1,0 +1,25 @@
+<script type="text/javascript">
+    $('document').ready(function () {
+        if ($('#subscription_terms').length) {
+
+            function toggleDisplayPaymentArea() {
+                $paymentFormArea = $('#payment-form-area');
+                $message = $('#payment-form-area-accept-tos-message');
+
+                if ($('#subscription_terms').is(":checked")) {
+                    $paymentFormArea.show();
+                    $message.hide();
+                } else {
+                    $paymentFormArea.hide();
+                    $message.show();
+                }
+            }
+
+            $('#subscription_terms').change(function () {
+                toggleDisplayPaymentArea();
+            });
+
+            toggleDisplayPaymentArea();
+        }
+    });
+</script>

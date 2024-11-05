@@ -1,0 +1,17 @@
+text:
+    - 'Welcome to %website_name%!'
+    - '%website_logo_path%'
+    - 'Dear %customer_full_name%'
+    - 'We''re thrilled to have you as part of the demo.com family!'
+    - 'Your account is all set up, and you''re ready to explore our platform. Log in and begin your %website_name% experience today!'
+    - 'Username:'
+    - '%user_username%'
+    - 'Password:'
+    - '%user_password%'
+    - 'Login at:'
+    - '%website_domain%'
+    - 'If you encounter any issues, don not hesitate to contact our support team via email at %website_support_email% or by phone at %website_support_number%.'
+    - '%company_name%'
+    - '%company_business_number% - %company_address%, %company_postcode%, %company_city%, %company_country%'
+theme:
+    images: { dummy: 'https://place-hold.it/400x200' }

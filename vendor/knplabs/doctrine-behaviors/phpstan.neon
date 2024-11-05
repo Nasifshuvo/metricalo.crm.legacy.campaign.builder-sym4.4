@@ -1,0 +1,46 @@
+includes:
+    - phpstan-extension.neon
+    - vendor/symplify/phpstan-extensions/config/config.neon
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+
+parameters:
+    paths:
+        - "src"
+        - "tests"
+
+    level: 8
+    checkGenericClassInNonGenericObjectType: false
+
+    # to allow installing with various phsptan versions without reporting old errors here
+    reportUnmatchedIgnoredErrors: false
+
+    ignoreErrors:
+        # traits
+        - '#Call to an undefined method Knp\\DoctrineBehaviors\\Contract\\Provider\\UserProviderInterface::changeUser\(\)#'
+        - '#Call to an undefined method Knp\\DoctrineBehaviors\\Contract\\Entity\\SluggableInterface::getId\(\)#'
+        - '#Call to an undefined method Knp\\DoctrineBehaviors\\Contract\\Entity\\TreeNodeInterface::getId\(\)#'
+        - '#Call to an undefined method Knp\\DoctrineBehaviors\\Contract\\Entity\\TreeNodeInterface::to(Flat)?Array\(\)#'
+
+        # buggy
+        - '#of function call_user_func_array expects callable#'
+
+        # mixed
+        - '#has no return typehint specified#'
+        - '#return type has no value type specified#'
+        - '#has parameter (.*?) with no (typehint|value type) specified#'
+        - '#Parameter \#1 \$input of function array_filter expects array, array<int, string\>\|false given#'
+        - '#PHPDoc tag @var for variable \$entity has invalid type Knp\\DoctrineBehaviors\\Model\\Uuidable\\UuidableTrait#'
+        # cache buggy
+        - '#Access to an undefined property Knp\\DoctrineBehaviors\\Tests\\Fixtures\\Entity\\TreeNodeEntity\:\:\$parentNodePath#'
+        - '#Property Knp\\DoctrineBehaviors\\Tests\\Fixtures\\Entity\\GeocodableEntity\:\:\$location has no typehint specified#'
+
+        # tests
+        - '#Offset 0 does not exist on array<Knp\\DoctrineBehaviors\\Contract\\Entity\\TreeNodeInterface\>\|ArrayAccess\|null#'
+
+        - '#Cannot call method addChildNode\(\) on Knp\\DoctrineBehaviors\\Contract\\Entity\\TreeNodeInterface\|null#'
+
+        - '#Property Knp\\DoctrineBehaviors\\Provider\\LocaleProvider\:\:\$translator has no typehint specified#'
+        - '#PHPDoc tag @var has invalid value \(TranslatorInterface&LocaleAwareInterface\|null\)\: Unexpected token "\|", expected TOKEN_OTHER at offset \d+#'
+
+        - '#Call to method getUuid\(\) on an unknown class Knp\\DoctrineBehaviors\\Model\\Uuidable\\UuidableTrait#'

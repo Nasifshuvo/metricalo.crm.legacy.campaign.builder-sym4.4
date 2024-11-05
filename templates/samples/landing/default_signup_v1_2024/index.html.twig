@@ -1,0 +1,138 @@
+{% extends 'page_template/landing/landing_layout.html.twig' %}
+
+{% trans_default_domain "order" %}
+
+{% block stylesheets %}
+  {{ parent() }}
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800&display=swap" rel="stylesheet">
+  
+    {% include 'page_template_dynamic/landing/default_signup_v1_2024/css/_styles.html.twig' %}
+
+ <style type="text/css">
+    {% include 'page_template_dynamic/landing/default_signup_v1_2024/css/style.css.twig' %}
+  </style> 
+
+    <style>
+        .header {
+            background-color:#1A124B;
+        }
+        .section {
+            background-color: #fff; 
+        }
+        .pricing {
+            color: #000;
+            background-color: #f6f6f6;
+        }
+        .pricing-title {
+            background: #43FEF4;
+        }
+        .pricing-list {
+            width: 80%;
+            margin: 0 auto;
+            padding: 0 40px;
+            text-align: left;
+            list-style-image: url("{{ pageTheme.getImage('list_style_img') }}");
+        }
+        .pricing-list::before, .pricing-list::after {
+            background: #aaa;
+        }
+
+        .form {
+            color: #000;
+            background-color: #EFEFEF;
+        }
+        .termslink {
+            color: #aaa;
+        }
+        .termslink:hover {
+            color: #aaa;
+        }
+        
+
+        
+        .pricing-interval div {
+            padding: 16px 8px;
+            font-size: 15px;
+        }
+
+        .curreny-HUF {
+            font-size: 32px;
+            margin: 15px 0 10px;
+        }
+
+        .curreny-BGN {
+            font-size: 38px;
+            margin-top: 14px;
+        }
+    </style>
+
+ 
+
+{% endblock %}
+
+{% block meta_tags %}
+    <meta property="og:url" content="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}"/>
+    <meta property="og:title" content=""/>
+    <meta property="og:description" content=""/>
+    <meta property="og:image" content=""/>
+{% endblock %}
+{% block body %}
+
+        <header class="header">
+             <img src="{{ service.getLogoImagePath() }}" alt="logo">
+        </header>
+
+        <section class="section">
+            <div class="container">
+                <div class="row flex-center">
+                    <div class="col-md-5">
+                        <div class="flex-wrap">
+                        <article class="pricing">
+                            <header class="pricingHeader">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="337" height="237" viewBox="0 0 337 237" fill="none">
+                                <path id="dynamicSvg" d="M88.9996 189.896C160.404 189.896 276.124 189.896 276.124 189.896C276.124 189.896 316.769 193.299 336.856 171.831V0.278915H65.609C29.3693 0.278915 0 18.9957 0 42.0856V236.6C0 236.6 17.5954 189.896 88.9996 189.896Z" fill="#1A124B"/>
+                            </svg>
+                                <h1 class="pricing-title">{{ pageText.get("Price") }}</h1>
+
+                                <div class="pricingContent">
+                                    <div class="row">
+                                        <div class="pricing-value col-xs-7">
+                                            <p class="price curreny-USD"><span>{{ pageText.get("%product_subscription_price%") }}</span> </p>
+
+                                            <div class="pricing-interval col-xs-5">
+                                            <div>{{ pageText.get("Every %product_subscription_interval_days% days") }}</div>
+                                        </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <h5 class="trial-period">{{ pageText.get("%product_subscription_trial_days%-days trial period / %product_price%") }}</h5>
+                                </div>
+
+                                
+                            </header>
+                            <ul class="pricing-list">
+                                {% for benefit in product.getAllBenefits() %}
+                                    <li class="pricing-listItem">{{ benefit }}</li>
+                                {% endfor %}
+                            </ul>
+                        </article>
+                    </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="form">
+                             <h1 class="form-title">{{ pageText.get('Please fill form below')}}</h1>
+
+                             {% set termsCheckboxSection = 'page_template/_shared/_customer_form/_terms/_with_privacy_policy_page_text_2024.html.twig' %}
+
+                            {% include 'page_template/_shared/_customer_form/_default_non_vertical_2024.html.twig' with {
+                                'termsCheckboxSection': termsCheckboxSection,
+                            } %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock %}

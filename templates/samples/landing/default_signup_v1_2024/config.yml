@@ -1,0 +1,15 @@
+text:
+    0: Price
+    1: '%product_subscription_price%'
+    2: 'Every %product_subscription_interval_days% days'
+    5: 'I confirm that i am above 18 years of age.'
+    6: 'I accept the'
+    7: 'terms and conditions'
+    8: 'and the'
+    9: 'Privacy Policy'
+    15: 'Please fill form below'
+    23: 'When you sign up for the service, you receive a %product_subscription_trial_days%-days trial, which you pay %product_price%. If you choose not to cancel the trial within the trial period, you will be charged %product_subscription_price% every %product_subscription_interval_days% days, until you cancel your membership.'
+    24: 'Tick this box to receive offers, promotions and other commercial messages - You can unsubscribe at any time.'
+    26: '%product_subscription_trial_days%-days trial period / %product_price%'
+theme:
+    images: { background: 'https://webuildix.com/builder/webuildixcom/theme/images/hero/office-team.jpg', list_style_img: 'https://files.fieryx.com/ostatic/checker.png' }

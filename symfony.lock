@@ -1,0 +1,276 @@
+{
+    "doctrine/annotations": {
+        "version": "1.14",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "a2759dd6123694c8d901d0ec80006e044c2e6457"
+        },
+        "files": [
+            "config/routes/annotations.yaml"
+        ]
+    },
+    "doctrine/doctrine-bundle": {
+        "version": "2.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.3",
+            "ref": "06cff6e09c2f454bf6d8fca915ee25e1bb4d04cd"
+        },
+        "files": [
+            "config/packages/doctrine.yaml",
+            "config/packages/prod/doctrine.yaml",
+            "config/packages/test/doctrine.yaml",
+            "src/Entity/.gitignore",
+            "src/Repository/.gitignore"
+        ]
+    },
+    "friendsofsymfony/jsrouting-bundle": {
+        "version": "2.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "2.3",
+            "ref": "a9f2e49180f75cdc71ae279a929c4b2e0638de84"
+        },
+        "files": [
+            "config/routes/fos_js_routing.yaml"
+        ]
+    },
+    "knplabs/doctrine-behaviors": {
+        "version": "v2.0.4"
+    },
+    "knplabs/knp-menu-bundle": {
+        "version": "v3.2.0"
+    },
+    "knplabs/knp-snappy-bundle": {
+        "version": "1.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.5",
+            "ref": "c81bdcf4a9d4e7b1959071457f9608631865d381"
+        },
+        "files": [
+            "config/packages/knp_snappy.yaml"
+        ]
+    },
+    "sensio/framework-extra-bundle": {
+        "version": "6.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.2",
+            "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
+        },
+        "files": [
+            "config/packages/sensio_framework_extra.yaml"
+        ]
+    },
+    "sonata-project/admin-bundle": {
+        "version": "3.107",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "3.64",
+            "ref": "9909a0cc9b4683a1d98be519a890375d3342a480"
+        },
+        "files": [
+            "config/packages/sonata_admin.yaml",
+            "config/routes/sonata_admin.yaml",
+            "src/Admin/.gitignore"
+        ]
+    },
+    "sonata-project/block-bundle": {
+        "version": "4.19",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "4.11",
+            "ref": "b4edd2a1e6ac1827202f336cac2771cb529de542"
+        },
+        "files": [
+            "config/packages/sonata_block.yaml"
+        ]
+    },
+    "sonata-project/doctrine-extensions": {
+        "version": "1.18",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.8",
+            "ref": "4ea4a4b6730f83239608d7d4c849533645c70169"
+        }
+    },
+    "sonata-project/exporter": {
+        "version": "2.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "2.4",
+            "ref": "93d6df022ef1dc24bdfa8667ddd560bbde89a7cc"
+        }
+    },
+    "sonata-project/form-extensions": {
+        "version": "1.18",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.4",
+            "ref": "9c8a1e8ce2b1f215015ed16652c4ed18eb5867fd"
+        },
+        "files": [
+            "config/packages/sonata_form.yaml"
+        ]
+    },
+    "sonata-project/translation-bundle": {
+        "version": "2.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "2.3",
+            "ref": "65f0e544ca19d262268e1f1ce2b4cbbe459a4a97"
+        },
+        "files": [
+            "config/packages/sonata_translation.yaml"
+        ]
+    },
+    "sonata-project/twig-extensions": {
+        "version": "1.12",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.2",
+            "ref": "30dba2f9b719f21b497a6302f41aac07f9079e13"
+        }
+    },
+    "stof/doctrine-extensions-bundle": {
+        "version": "1.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.2",
+            "ref": "e805aba9eff5372e2d149a9ff56566769e22819d"
+        },
+        "files": [
+            "config/packages/stof_doctrine_extensions.yaml"
+        ]
+    },
+    "symfony/console": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.4",
+            "ref": "fd5340d07d4c90504843b53da41525cf42e31f5c"
+        },
+        "files": [
+            "bin/console",
+            "config/bootstrap.php"
+        ]
+    },
+    "symfony/flex": {
+        "version": "1.21",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "146251ae39e06a95be0fe3d13c807bcf3938b172"
+        },
+        "files": [
+            ".env"
+        ]
+    },
+    "symfony/framework-bundle": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.4",
+            "ref": "24eb45d1355810154890460e6a05c0ca27318fe7"
+        },
+        "files": [
+            "config/bootstrap.php",
+            "config/packages/cache.yaml",
+            "config/packages/framework.yaml",
+            "config/packages/test/framework.yaml",
+            "config/preload.php",
+            "config/routes/dev/framework.yaml",
+            "config/services.yaml",
+            "public/index.php",
+            "src/Controller/.gitignore",
+            "src/Kernel.php"
+        ]
+    },
+    "symfony/routing": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.2",
+            "ref": "683dcb08707ba8d41b7e34adb0344bfd68d248a7"
+        },
+        "files": [
+            "config/packages/prod/routing.yaml",
+            "config/packages/routing.yaml",
+            "config/routes.yaml"
+        ]
+    },
+    "symfony/security-bundle": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.4",
+            "ref": "7b4408dc203049666fe23fabed23cbadc6d8440f"
+        },
+        "files": [
+            "config/packages/security.yaml"
+        ]
+    },
+    "symfony/translation": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "3.3",
+            "ref": "2ad9d2545bce8ca1a863e50e92141f0b9d87ffcd"
+        },
+        "files": [
+            "config/packages/translation.yaml",
+            "translations/.gitignore"
+        ]
+    },
+    "symfony/twig-bundle": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.4",
+            "ref": "73baff3f7b3cea12a73812a7cfd2c0924a9e250f"
+        },
+        "files": [
+            "config/packages/test/twig.yaml",
+            "config/packages/twig.yaml",
+            "templates/base.html.twig"
+        ]
+    },
+    "symfony/validator": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.3",
+            "ref": "3eb8df139ec05414489d55b97603c5f6ca0c44cb"
+        },
+        "files": [
+            "config/packages/test/validator.yaml",
+            "config/packages/validator.yaml"
+        ]
+    },
+    "twig/extra-bundle": {
+        "version": "v3.7.0"
+    }
+}

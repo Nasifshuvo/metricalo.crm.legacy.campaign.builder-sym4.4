@@ -1,0 +1,62 @@
+text:
+  - "Secure Payment"
+  - "1. Information"
+  - "2. Payment"
+  - "Payment method"
+  - "Card number"
+  - "Card holder name"
+  - "Expiry date"
+  - "CVV"
+  - "Pay Now"
+  - "Order Summary"
+  - "Today's Cost"
+  - "Total incl. VAT"
+  - "Total"
+  - "Technical Support"
+  - "Secure Checkout"
+  - "Safe Browsing"
+  - "Company info"
+  - "Fenella Lara"
+  - "I received my product yesterday. Fast and outstanding customer service! Thanks a lot."
+  - "Maison Parry"
+  - "Fast and easy to use!"
+  - "Riaan Burt"
+  - "I got an amazing product only 2 days after signing up! Everything was on point!"
+  - "Chelsea Howard"
+  - "Never have I spent my money that well. Great service and delivery.. Guess I was lucky this time! See you next time."
+  - "Please enter a valid card expiration date."
+  - "Please enter a valid card expiration date in the MM/YY format."
+  - "Invalid card number entered, please try again."
+
+  # Use full config and specify textarea if input a large amount of text
+  - field:
+      key: "%descriptor% will be displayed on your bank statement as a charge from %company_name%"
+      type: textarea
+  - field:
+      key: "You will be billed by %company_name%, an e-commerce merchant located in the %company_country%."
+      type: textarea
+  - field:
+      key: "By completing this purchase, you consent to a %product_subscription_trial_days%-day trial membership with %website_domain% for %product_price%, and you acknowledge that unless you cancel within due time, You will be enrolled in the full %product_subscription_interval_days%-day membership at the price of %product_subscription_price% every %product_subscription_interval_days% days. If the trial is not cancelled, you will be charged %product_subscription_price% every %product_subscription_interval_days% days until the membership is canceled."
+      type: textarea
+  - field:
+      key: "All purchases are covered by a 14-day full refund guarentee. The decision to reimburse a charge does not insure the obligation to reimburse other subsequent expenses. Any charge refunded by %website_domain% for any reason, will be refunded by the payment method used for the original transaction. %website_domain% will not credit any cash charges. Any request for refund must be made by contacting customer service."
+      type: textarea
+
+  - "%website_domain%"
+  - "%company_name%, %company_business_number% - %company_address%, %company_city% %company_postcode%, %company_country%"
+
+theme:
+  images:
+    # Key : Placeholder
+    "cards": "https://i.imgur.com/B171wqD.png"
+    "tech": "https://i.imgur.com/dUMlCTa.png"
+    "secure": "https://i.imgur.com/zHuLyqk.png"
+    "safe": "https://i.imgur.com/yXxxfQg.png"
+
+
+# Full Config
+#    - potato:
+#        type: entity
+#        options:
+#          data: https://dummyimage.com/200x50/aaa/000000
+#          required: false

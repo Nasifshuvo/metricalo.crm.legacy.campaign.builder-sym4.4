@@ -1,0 +1,40 @@
+{% if checkoutRedirect is defined and checkoutRedirect == true %}
+    <script type="text/javascript">
+
+        $jquery = jQuery.noConflict();
+
+        $jquery(document).ready(function () {
+
+            $jquery('#customer_form').append('<input type="hidden" name="checkout_redirect" value="1" />');
+
+            /** move TOS acceptance to page 2 **/
+            $tos = $jquery("input[name*='customer[terms]']");
+            if ($tos.length) {
+                $tos.prop('checked', true);
+                $tos.removeAttr('required');
+            }
+
+            $tosRec = $jquery("input[name*='customer[terms_recurring]']");
+            if ($tosRec.length) {
+                $tosRec.removeAttr('required');
+            }
+
+            $state = $jquery("input[name*='customer[state]']");
+            if ($state.length) {
+                $state.removeAttr('required');
+            }
+
+            $cForm = $jquery("#customer_form");
+            {# double check if form is valid #}
+
+            //if ($cForm.isValid()) {
+
+            setTimeout(function () {
+                $jquery('#customer_submit_btn').click();
+            }, 700);
+
+            //}
+        });
+
+    </script>
+{% endif %}

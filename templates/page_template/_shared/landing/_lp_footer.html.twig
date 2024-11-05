@@ -1,0 +1,10 @@
+{% if not campaign.getVertical() %}
+    <footer>
+        <div class="container">
+            <p>&copy; {{ service.name }} {{ "now"|date("Y") }}. {{ service.getCompanyName() }} -
+                CR: {{ service.getBusinessNumber() }} - {{ service.getCompanyAddress() }}
+                , {{ service.getCompanyCity() }} {{ service.getCompanyPostcode() }}, {{ service.getCompanyCountry() }} |
+                All rights reserved.</p>
+        </div>
+    </footer>
+{% endif %}

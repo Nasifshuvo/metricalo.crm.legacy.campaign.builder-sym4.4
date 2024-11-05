@@ -1,0 +1,8 @@
+{% trans_default_domain "order" %}
+
+{% if service.countAllShownDescriptors() == 1 %}
+    <p class="terms">{{ '%descriptor%.will.be.displayed.on.your.bank.statement'|trans({'%descriptor%': descriptor|raw})|raw }}</p>
+{% else %}
+    <p class="terms">{{ 'your.paymnet.descriptor.will.read.one.of.the.following.%descriptor%'|trans({'%descriptor%': descriptor|raw})|raw }}</p>
+{% endif %}
+<br><br>

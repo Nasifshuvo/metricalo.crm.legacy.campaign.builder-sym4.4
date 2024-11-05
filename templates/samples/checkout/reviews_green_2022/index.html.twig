@@ -1,0 +1,234 @@
+{% extends 'page_template/checkout/checkout_layout.html.twig' %}
+
+{% trans_default_domain "order" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style type="text/css">
+        {% include 'page_template_dynamic/checkout/reviews_green_2022/css/main.css.twig' %}
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        {% include 'page_template_dynamic/checkout/reviews_green_2022/js/main.js.twig' %}
+    </script>
+
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid min-vh-100">
+        <div class="row wrapper main-content">
+            <div class="col-sm-12 col-xl-7 p-4 form">
+                <div class="effect"></div>
+                <div class="m-xl-5 p-xl-5">
+                    <h1>{{ pageText.get('Secure Payment') }}</h1>
+                    <div class="mt-5 card">
+                        <section class="card-body row headline">
+                            <div class="col-10">{{ pageText.get('1. Information') }}</div>
+                            <div class="col-2 text-end">
+                                <i class="fa-solid fa-chevron-down fa-lg"></i>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="mt-4 card">
+                        <section class="card-body pay-card-body row headline">
+                            <div class="col-10">{{ pageText.get('2. Payment') }}</div>
+                            <div class="col-2 text-end">
+                                <i class="fa-solid fa-chevron-up fa-lg"></i>
+                            </div>
+                            <hr class="my-3">
+                            <div class="row input-wrapper">
+                                <div class="col-12 col-sm-6">{{ pageText.get('Payment method') }}</div>
+                                <div class="col-12 col-sm-6 text-end cards-logo-wrapper">
+                                    <img src="{{ pageTheme.getImage('cards') }}" class="cards-logo" alt="Cards">
+                                </div>
+                            </div>
+                            <div class="inputs">
+                                {% if payment_view is defined and payment_view is not empty %}
+                                    {% include payment_view %}
+                                {% else %}
+                                    {% include 'page_template_dynamic/checkout/reviews_green_2022/parts/_form.html.twig' %}
+                                {% endif %}
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-xl-5 p-4">
+                <div class="my-3 mx-xl-5 p-3 card reviews">
+                    <section class="card-body">
+                        <article>
+                            <h4 id="author" class="mb-3"></h4>
+                            <ul class="list-unstyled d-flex justify-content-center text-warning mb-3">
+                                <li class="px-1"><i class="fas fa-star fa-lg"></i></li>
+                                <li class="px-1"><i class="fas fa-star fa-lg"></i></li>
+                                <li class="px-1"><i class="fas fa-star fa-lg"></i></li>
+                                <li class="px-1"><i class="fas fa-star fa-lg"></i></li>
+                                <li class="px-1"><i class="fas fa-star fa-lg"></i></li>
+                            </ul>
+                            <p id="info" class="px-5"></p>
+                            <div class="d-flex justify-content-between">
+                                <button class="previous btn">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="next btn">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </article>
+                    </section>
+                </div>
+                <div class="my-3 mx-xl-5 p-3 card summary">
+                    <section class="card-body">
+                        <article>
+                            <h1 class="mb-4">{{ pageText.get('Order Summary') }}</h1>
+                            <div class="row">
+                                <p class="col-7 dark-grey">{{ pageText.get("Today's Cost") }}</p>
+                                <p class="col-5 text-end">{{ order.total|priceIntl(product.getCurrency(), lead.getIntlLocale())|raw }}</p>
+                            </div>
+                            <hr>
+                            <div class="row total">
+                                <p class="col-7">{{ pageText.get('Total') }}</p>
+                                <p class="col-5 text-end">{{ order.total|priceIntl(product.getCurrency(), lead.getIntlLocale())|raw }}</p>
+                            </div>
+                        </article>
+                    </section>
+                </div>
+                <div class="my-2 p-3 images">
+                    <div class="row d-flex justify-content-center thumbnail-icons">
+                        <div class="col-3">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <div class="border-custom rounded-circle wrapper d-flex align-items-center justify-content-center">
+                                    <img src="{{ pageTheme.getImage('tech') }}" alt="Technical Support" class="single">
+                                </div>
+                            </div>
+                            <div class="pt-3 heading">
+                                {{ pageText.get('Technical Support') }}
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <div class="border-custom rounded-circle wrapper d-flex align-items-center justify-content-center">
+                                    <img src="{{ pageTheme.getImage('secure') }}" alt="Secure Checkout" class="single">
+                                </div>
+                            </div>
+                            <div class="pt-3 heading">
+                                {{ pageText.get('Secure Checkout') }}
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <div class="border-custom rounded-circle wrapper d-flex align-items-center justify-content-center">
+                                    <img src="{{ pageTheme.getImage('safe') }}" alt="Safe browsing" class="single">
+                                </div>
+                            </div>
+                            <div class="pt-3 heading">
+                                {{ pageText.get('Safe Browsing') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 mb-0 mx-xl-5 p-3 text">
+                    {{ pageText.get('%descriptor% will be displayed on your bank statement as a charge from %company_name%')|raw }}
+                    <br /><br />
+                    {{ pageText.get('You will be billed by %company_name%, an e-commerce merchant located in the %company_country%.')|raw }}
+                   <br /><br />
+                    {{ pageText.get('By completing this purchase, you consent to a %product_subscription_trial_days%-day trial membership with %website_domain% for %product_price%, and you acknowledge that unless you cancel within due time, You will be enrolled in the full %product_subscription_interval_days%-day membership at the price of %product_subscription_price% every %product_subscription_interval_days% days. If the trial is not cancelled, you will be charged %product_subscription_price% every %product_subscription_interval_days% days until the membership is canceled.')|raw }}
+                    <br /><br />
+                    {{ pageText.get('All purchases are covered by a 14-day full refund guarentee. The decision to reimburse a charge does not insure the obligation to reimburse other subsequent expenses. Any charge refunded by %website_domain% for any reason, will be refunded by the payment method used for the original transaction. %website_domain% will not credit any cash charges. Any request for refund must be made by contacting customer service.')|raw }}
+                </div>
+            </div>
+        </div>
+        <div class="row ixed-bottom">
+            <div class="col-12 footer">
+                <p>{{ pageText.get('%website_domain%') }} {{ "now"|date("Y") }}. {{ pageText.get('%company_name%, %company_business_number% - %company_address%, %company_city% %company_postcode%, %company_country%') }}</p>
+            </div>
+        </div>
+    </div>
+    {% include 'page_template/_shared/_affiliate_footer.html.twig' %}
+
+    <script>
+        let reviews = [{
+            id: 1,
+            name:  "{{ pageText.get('Fenella Lara') }}",
+            text: "{{pageText.get('I received my product yesterday. Fast and outstanding customer service! Thanks a lot.')}}"
+        },
+        {
+            id: 2,
+            name: "{{ pageText.get('Maison Parry') }}",
+            text: "{{ pageText.get('Fast and easy to use!') }}"
+        },
+        {
+            id: 3,
+            name: "{{ pageText.get('Riaan Burt') }}",
+            text: "{{ pageText.get('I got an amazing product only 2 days after signing up! Everything was on point!') }}"
+        },
+        {
+            id: 4,
+            name: "{{ pageText.get('Chelsea Howard') }}",
+            text: "{{ pageText.get('Never have I spent my money that well. Great service and delivery.. Guess I was lucky this time! See you next time.') }}"
+        }
+        ];
+
+        // Load initial item
+        window.addEventListener("DOMContentLoaded", () => {
+            let author = document.getElementById("author");
+            let info = document.getElementById("info");
+
+            let prevBtn = document.querySelector(".previous");
+            let nextBtn = document.querySelector(".next");
+
+            let currentItem = 0;
+
+            let item = reviews[currentItem];
+
+            // Skipping to next person if there is no name or text for that particular person
+            if(!item.name || !item.text) nextBtn.click()
+
+            author.textContent = item.name;
+            info.textContent = item.text;
+
+            // Show person based on item
+            function showPerson(person) {
+                let item = reviews[person];
+                author.textContent = item.name;
+                info.textContent = item.text;
+            }
+
+            // Showing next person
+            nextBtn.addEventListener("click", () => {
+                currentItem++;
+                if (currentItem > reviews.length - 1) {
+                    currentItem = 0;
+                }
+                showPerson(currentItem);
+            });
+
+            // Showing previous person
+            prevBtn.addEventListener("click", () => {
+                currentItem--;
+                if (currentItem < 0) {
+                    currentItem = reviews.length - 1;
+                }
+                showPerson(currentItem);
+            });
+       
+            // Looping through persons every 7.5 seconds
+            setInterval(() => { nextBtn.click() }, 7500)
+        });
+    </script>
+{% endblock %}
